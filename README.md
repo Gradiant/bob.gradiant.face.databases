@@ -54,6 +54,8 @@ Then, you can buildout the project with:
   bin/nosetests -v
 ~~~
 
+Note that if we do not export the environment variables with the database paths, most tests will be skipped.
+
 ## Clean
 
 ~~~
