@@ -10,7 +10,7 @@ setup(
     version=get_version(),
     description='Public databases interfaces for face recognition and face-PAD',
     url='http://pypi.python.org/pypi/template-gradiant-python',
-    license='BSD 3',
+    license='BSD-3',
     author='Biometrics Team (Gradiant)',
     author_email='biometrics.support@gradiant.org',
     long_description=open('README.md').read(),
