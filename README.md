@@ -64,7 +64,7 @@ Note: You should be inside the package directory (bob.gradiant)
     #You should be inside the activated conda env (bob.gradiant)
     python bootstrap-buildout.py
     bin/buildout
-~~
+~~~
 
 ## Test
 
