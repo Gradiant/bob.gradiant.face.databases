@@ -1,7 +1,6 @@
-# bob.gradiant.face.databases 
+# bob.gradiant.face.databases [![Build Status](https://travis-ci.org/Gradiant/bob.gradiant.pipelines.svg?branch=master)](https://travis-ci.org/Gradiant/bob.gradiant.face.databases) [![Doc](http://img.shields.io/badge/docs-latest-orange.svg)](https://gradiant.github.io/bob.gradiant.face.databases/)
 
-[![Build Status](https://travis-ci.org/Gradiant/bob.gradiant.pipelines.svg?branch=master)](https://travis-ci.org/Gradiant/bob.gradiant.face.databases)
-[![Doc](http://img.shields.io/badge/docs-latest-orange.svg)](https://gradiant.github.io/bob.gradiant.face.databases/)
+
 
 
 [Bob](https://www.idiap.ch/software/bob/) package (python) which defines databases protocols. This repository does not include data from the databases, these must be requested from the entities responsible for them.
@@ -34,20 +33,18 @@ docker run -v $(pwd):/bob.gradiant.pipelines acostapazo/bob.gradiant:latest bin/
 
 1. Install conda -> https://conda.io/docs/user-guide/install/index.html
 
-2. Create the conda env from file (environment_linux.yml)
-
-Note: You should be inside the package directory (bob.gradiant)
+2. Create the conda env
 
 ~~~
     conda create --name bob.gradiant python=2.7
-    conda config --env --add channels defaults
-    conda config --env --add channels https://www.idiap.ch/software/bob/conda
 ~~~
 
-3. Activate the environment
+3. Activate the environment and add some channels
 
 ~~~
-   source activate bob.gradiant.pipelines
+   source activate bob.gradiant
+   conda config --env --add channels defaults
+   conda config --env --add channels https://www.idiap.ch/software/bob/conda
 ~~~
 
 4. Install dependencies
