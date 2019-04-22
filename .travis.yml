@@ -9,7 +9,7 @@ before_install:
   - docker pull acostapazo/bob.gradiant:latest
 
 script:
-  - docker run -v $(pwd):/bob.gradiant.face.database acostapazo/bob.gradiant:latest bin/bash -c "cd bob.gradiant.face.database; ./ci.sh"
+  - docker run -v $(pwd):/bob.gradiant.face.database acostapazo/bob.gradiant:latest bin/bash -c "source activate bob.gradiant; cd bob.gradiant.face.database; ./ci.sh"
 
 # Deploy using travis builtin GitHub Pages support
 deploy:
