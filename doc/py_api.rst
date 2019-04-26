@@ -11,6 +11,12 @@ This section includes information for using the pure Python API of
 
 .. automodule:: bob.gradiant.face.databases
 
+.. autoclass:: AggregateDatabase
+    :members:
+
+.. autoclass:: HkbuDatabase
+    :members:
+
 .. autoclass:: MsuMfsdDatabase
     :members:
 
@@ -23,8 +29,15 @@ This section includes information for using the pure Python API of
 .. autoclass:: ReplayMobileDatabase
     :members:
 
+.. autoclass:: RoseYoutuDatabase
+    :members:
+
+.. autoclass:: SiwDatabase
+    :members:
+
+.. autoclass:: ThreedmadDatabase
+    :members:
+
 .. autoclass:: UvadDatabase
     :members:
 
-.. autoclass:: AllPadDatabases
-    :members:

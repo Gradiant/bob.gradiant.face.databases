@@ -8,3 +8,4 @@ COPY envs/ubuntu_environment.yml /envs/
 RUN conda env create -f envs/ubuntu_environment.yml
 
 ENV LANG C.UTF-8
+
