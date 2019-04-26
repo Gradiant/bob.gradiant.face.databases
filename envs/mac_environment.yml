@@ -1,4 +1,4 @@
-name: bob.gradiant
+name: bob.gradiant.face.databases
 channels:
   - https://www.idiap.ch/software/bob/conda
   - defaults

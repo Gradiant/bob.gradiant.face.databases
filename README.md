@@ -25,7 +25,7 @@ docker build --no-cache -t acostapazo/bob.gradiant.face.databases:latest  .
 To check if everything is alright you can run the ci.sh script with:
 
 ~~~
-docker run -v $(pwd):/bob.gradiant.face.databases acostapazo/bob.gradiant.face.databases:latest bin/bash -c "source activate bob.gradiant; cd bob.gradiant.face.databases; ./ci.sh"
+docker run -v $(pwd):/bob.gradiant.face.databases acostapazo/bob.gradiant.face.databases:latest bin/bash -c "source activate bob.gradiant.face.databases; cd bob.gradiant.face.databases; ./ci.sh"
 ~~~
 
 
