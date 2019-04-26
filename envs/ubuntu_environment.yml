@@ -1,4 +1,4 @@
-name: bob.gradiant
+name: bob.gradiant.face.databases
 channels:
   - https://www.idiap.ch/software/bob/conda
   - defaults
@@ -162,6 +162,10 @@ dependencies:
   - menpofit=0.5.0=py36_0
   - openh264=1.7.0=hc521636_1
   - vlfeat=0.9.21=h18fa195_0
+  - bob.db.msu_mfsd_mod=2.2.3
+  - bob.db.replay=3.0.2
+  - bob.db.replaymobile
+  - bob.db.maskattack
   - pip:
     - enum-compat==0.0.2
     - progress==1.4
