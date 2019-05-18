@@ -1,0 +1,831 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Python API &mdash; bob.gradiant.face.databases 2.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="bob.gradiant.face.databases" href="index.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> bob.gradiant.face.databases
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Python API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">bob.gradiant.face.databases</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Python API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/py_api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="python-api">
+<h1>Python API<a class="headerlink" href="#python-api" title="Permalink to this headline">¶</a></h1>
+<p>This section includes information for using the pure Python API of
+<code class="docutils literal notranslate"><span class="pre">bob.gradiant.face.databases</span></code>.</p>
+<span class="target" id="module-bob.gradiant.face.databases"></span><dl class="class">
+<dt id="bob.gradiant.face.databases.AggregateDatabase">
+<em class="property">class </em><code class="descclassname">bob.gradiant.face.databases.</code><code class="descname">AggregateDatabase</code><span class="sig-paren">(</span><em>base_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/aggregate_database/aggregate_database.html#AggregateDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.AggregateDatabase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bob.gradiant.core.classes.databases.database.Database</span></code></p>
+<dl class="method">
+<dt id="bob.gradiant.face.databases.AggregateDatabase.set_new_custom_protocol">
+<code class="descname">set_new_custom_protocol</code><span class="sig-paren">(</span><em>new_protocol_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/aggregate_database/aggregate_database.html#AggregateDatabase.set_new_custom_protocol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.AggregateDatabase.set_new_custom_protocol" title="Permalink to this definition">¶</a></dt>
+<dd><p class="rubric">Example</p>
+<p>new_protocol_dict = {“name-protocol”: PROTOCOL}</p>
+<p>e.g grandtest</p>
+<p>new_protocol_dict = {“grandtest”: {“Train”: None, “Dev”: None, “Test”: Nones}</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_protocol_dict</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.AggregateDatabase.name">
+<em class="property">static </em><code class="descname">name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/aggregate_database/aggregate_database.html#AggregateDatabase.name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.AggregateDatabase.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.AggregateDatabase.get_parsed_databases">
+<em class="property">static </em><code class="descname">get_parsed_databases</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/aggregate_database/aggregate_database.html#AggregateDatabase.get_parsed_databases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.AggregateDatabase.get_parsed_databases" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.AggregateDatabase.get_available_protocols">
+<em class="property">static </em><code class="descname">get_available_protocols</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/aggregate_database/aggregate_database.html#AggregateDatabase.get_available_protocols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.AggregateDatabase.get_available_protocols" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.AggregateDatabase.is_a_collection_of_databases">
+<em class="property">static </em><code class="descname">is_a_collection_of_databases</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/aggregate_database/aggregate_database.html#AggregateDatabase.is_a_collection_of_databases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.AggregateDatabase.is_a_collection_of_databases" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.AggregateDatabase.info">
+<em class="property">static </em><code class="descname">info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/aggregate_database/aggregate_database.html#AggregateDatabase.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.AggregateDatabase.info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.AggregateDatabase.get_protocols">
+<code class="descname">get_protocols</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/aggregate_database/aggregate_database.html#AggregateDatabase.get_protocols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.AggregateDatabase.get_protocols" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.AggregateDatabase.get_subsets">
+<em class="property">static </em><code class="descname">get_subsets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/aggregate_database/aggregate_database.html#AggregateDatabase.get_subsets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.AggregateDatabase.get_subsets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.AggregateDatabase.get_capture_devices">
+<em class="property">static </em><code class="descname">get_capture_devices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/aggregate_database/aggregate_database.html#AggregateDatabase.get_capture_devices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.AggregateDatabase.get_capture_devices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.AggregateDatabase.get_attack_dict">
+<em class="property">static </em><code class="descname">get_attack_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/aggregate_database/aggregate_database.html#AggregateDatabase.get_attack_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.AggregateDatabase.get_attack_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.AggregateDatabase.get_all_accesses">
+<code class="descname">get_all_accesses</code><span class="sig-paren">(</span><em>access_modifier=&lt;bob.gradiant.core.classes.accesses.access_modifier.AccessModifier object&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/aggregate_database/aggregate_database.html#AggregateDatabase.get_all_accesses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.AggregateDatabase.get_all_accesses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.AggregateDatabase.get_all_labels">
+<code class="descname">get_all_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/aggregate_database/aggregate_database.html#AggregateDatabase.get_all_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.AggregateDatabase.get_all_labels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.AggregateDatabase.set_dict_all_labels">
+<code class="descname">set_dict_all_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/aggregate_database/aggregate_database.html#AggregateDatabase.set_dict_all_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.AggregateDatabase.set_dict_all_labels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.AggregateDatabase.get_ground_truth">
+<code class="descname">get_ground_truth</code><span class="sig-paren">(</span><em>protocol_key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/aggregate_database/aggregate_database.html#AggregateDatabase.get_ground_truth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.AggregateDatabase.get_ground_truth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.AggregateDatabase.get_ground_truth_list">
+<code class="descname">get_ground_truth_list</code><span class="sig-paren">(</span><em>protocol_key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/aggregate_database/aggregate_database.html#AggregateDatabase.get_ground_truth_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.AggregateDatabase.get_ground_truth_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bob.gradiant.face.databases.HkbuDatabase">
+<em class="property">class </em><code class="descclassname">bob.gradiant.face.databases.</code><code class="descname">HkbuDatabase</code><span class="sig-paren">(</span><em>base_path</em>, <em>annotation_base_path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/hkbu/hkbu_database.html#HkbuDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.HkbuDatabase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bob.gradiant.core.classes.databases.database.Database</span></code></p>
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.HkbuDatabase.name">
+<em class="property">static </em><code class="descname">name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/hkbu/hkbu_database.html#HkbuDatabase.name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.HkbuDatabase.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.HkbuDatabase.is_a_collection_of_databases">
+<em class="property">static </em><code class="descname">is_a_collection_of_databases</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/hkbu/hkbu_database.html#HkbuDatabase.is_a_collection_of_databases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.HkbuDatabase.is_a_collection_of_databases" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.HkbuDatabase.info">
+<em class="property">static </em><code class="descname">info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/hkbu/hkbu_database.html#HkbuDatabase.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.HkbuDatabase.info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.HkbuDatabase.get_protocols">
+<em class="property">static </em><code class="descname">get_protocols</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/hkbu/hkbu_database.html#HkbuDatabase.get_protocols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.HkbuDatabase.get_protocols" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.HkbuDatabase.get_subsets">
+<em class="property">static </em><code class="descname">get_subsets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/hkbu/hkbu_database.html#HkbuDatabase.get_subsets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.HkbuDatabase.get_subsets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.HkbuDatabase.get_capture_devices">
+<em class="property">static </em><code class="descname">get_capture_devices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/hkbu/hkbu_database.html#HkbuDatabase.get_capture_devices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.HkbuDatabase.get_capture_devices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.HkbuDatabase.get_attack_dict">
+<em class="property">static </em><code class="descname">get_attack_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/hkbu/hkbu_database.html#HkbuDatabase.get_attack_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.HkbuDatabase.get_attack_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.HkbuDatabase.get_all_accesses">
+<code class="descname">get_all_accesses</code><span class="sig-paren">(</span><em>access_modifier=&lt;bob.gradiant.core.classes.accesses.access_modifier.AccessModifier object&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/hkbu/hkbu_database.html#HkbuDatabase.get_all_accesses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.HkbuDatabase.get_all_accesses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.HkbuDatabase.get_all_labels">
+<code class="descname">get_all_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/hkbu/hkbu_database.html#HkbuDatabase.get_all_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.HkbuDatabase.get_all_labels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.HkbuDatabase.get_ground_truth">
+<code class="descname">get_ground_truth</code><span class="sig-paren">(</span><em>protocol</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/hkbu/hkbu_database.html#HkbuDatabase.get_ground_truth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.HkbuDatabase.get_ground_truth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bob.gradiant.face.databases.MsuMfsdDatabase">
+<em class="property">class </em><code class="descclassname">bob.gradiant.face.databases.</code><code class="descname">MsuMfsdDatabase</code><span class="sig-paren">(</span><em>base_path</em>, <em>annotation_base_path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/msu_mfsd/msu_mfsd_database.html#MsuMfsdDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.MsuMfsdDatabase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bob.gradiant.core.classes.databases.database.Database</span></code></p>
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.MsuMfsdDatabase.name">
+<em class="property">static </em><code class="descname">name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/msu_mfsd/msu_mfsd_database.html#MsuMfsdDatabase.name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.MsuMfsdDatabase.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.MsuMfsdDatabase.is_a_collection_of_databases">
+<em class="property">static </em><code class="descname">is_a_collection_of_databases</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/msu_mfsd/msu_mfsd_database.html#MsuMfsdDatabase.is_a_collection_of_databases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.MsuMfsdDatabase.is_a_collection_of_databases" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.MsuMfsdDatabase.info">
+<em class="property">static </em><code class="descname">info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/msu_mfsd/msu_mfsd_database.html#MsuMfsdDatabase.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.MsuMfsdDatabase.info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.MsuMfsdDatabase.get_protocols">
+<em class="property">static </em><code class="descname">get_protocols</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/msu_mfsd/msu_mfsd_database.html#MsuMfsdDatabase.get_protocols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.MsuMfsdDatabase.get_protocols" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.MsuMfsdDatabase.get_subsets">
+<em class="property">static </em><code class="descname">get_subsets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/msu_mfsd/msu_mfsd_database.html#MsuMfsdDatabase.get_subsets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.MsuMfsdDatabase.get_subsets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.MsuMfsdDatabase.get_capture_devices">
+<em class="property">static </em><code class="descname">get_capture_devices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/msu_mfsd/msu_mfsd_database.html#MsuMfsdDatabase.get_capture_devices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.MsuMfsdDatabase.get_capture_devices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.MsuMfsdDatabase.get_attack_dict">
+<em class="property">static </em><code class="descname">get_attack_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/msu_mfsd/msu_mfsd_database.html#MsuMfsdDatabase.get_attack_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.MsuMfsdDatabase.get_attack_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.MsuMfsdDatabase.get_all_accesses">
+<code class="descname">get_all_accesses</code><span class="sig-paren">(</span><em>access_modifier=&lt;bob.gradiant.core.classes.accesses.access_modifier.AccessModifier object&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/msu_mfsd/msu_mfsd_database.html#MsuMfsdDatabase.get_all_accesses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.MsuMfsdDatabase.get_all_accesses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.MsuMfsdDatabase.get_all_labels">
+<code class="descname">get_all_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/msu_mfsd/msu_mfsd_database.html#MsuMfsdDatabase.get_all_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.MsuMfsdDatabase.get_all_labels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.MsuMfsdDatabase.get_ground_truth">
+<code class="descname">get_ground_truth</code><span class="sig-paren">(</span><em>protocol</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/msu_mfsd/msu_mfsd_database.html#MsuMfsdDatabase.get_ground_truth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.MsuMfsdDatabase.get_ground_truth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bob.gradiant.face.databases.OuluNpuDatabase">
+<em class="property">class </em><code class="descclassname">bob.gradiant.face.databases.</code><code class="descname">OuluNpuDatabase</code><span class="sig-paren">(</span><em>base_path</em>, <em>annotation_base_path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/oulu_npu/oulu_npu_database.html#OuluNpuDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.OuluNpuDatabase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bob.gradiant.core.classes.databases.database.Database</span></code></p>
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.OuluNpuDatabase.name">
+<em class="property">static </em><code class="descname">name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/oulu_npu/oulu_npu_database.html#OuluNpuDatabase.name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.OuluNpuDatabase.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.OuluNpuDatabase.is_a_collection_of_databases">
+<em class="property">static </em><code class="descname">is_a_collection_of_databases</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/oulu_npu/oulu_npu_database.html#OuluNpuDatabase.is_a_collection_of_databases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.OuluNpuDatabase.is_a_collection_of_databases" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.OuluNpuDatabase.info">
+<em class="property">static </em><code class="descname">info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/oulu_npu/oulu_npu_database.html#OuluNpuDatabase.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.OuluNpuDatabase.info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.OuluNpuDatabase.get_protocols">
+<em class="property">static </em><code class="descname">get_protocols</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/oulu_npu/oulu_npu_database.html#OuluNpuDatabase.get_protocols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.OuluNpuDatabase.get_protocols" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.OuluNpuDatabase.get_subsets">
+<em class="property">static </em><code class="descname">get_subsets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/oulu_npu/oulu_npu_database.html#OuluNpuDatabase.get_subsets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.OuluNpuDatabase.get_subsets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.OuluNpuDatabase.get_capture_devices">
+<em class="property">static </em><code class="descname">get_capture_devices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/oulu_npu/oulu_npu_database.html#OuluNpuDatabase.get_capture_devices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.OuluNpuDatabase.get_capture_devices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.OuluNpuDatabase.get_attack_dict">
+<em class="property">static </em><code class="descname">get_attack_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/oulu_npu/oulu_npu_database.html#OuluNpuDatabase.get_attack_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.OuluNpuDatabase.get_attack_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.OuluNpuDatabase.get_all_accesses">
+<code class="descname">get_all_accesses</code><span class="sig-paren">(</span><em>access_modifier=&lt;bob.gradiant.core.classes.accesses.access_modifier.AccessModifier object&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/oulu_npu/oulu_npu_database.html#OuluNpuDatabase.get_all_accesses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.OuluNpuDatabase.get_all_accesses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.OuluNpuDatabase.get_all_labels">
+<code class="descname">get_all_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/oulu_npu/oulu_npu_database.html#OuluNpuDatabase.get_all_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.OuluNpuDatabase.get_all_labels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.OuluNpuDatabase.get_ground_truth">
+<code class="descname">get_ground_truth</code><span class="sig-paren">(</span><em>protocol</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/oulu_npu/oulu_npu_database.html#OuluNpuDatabase.get_ground_truth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.OuluNpuDatabase.get_ground_truth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bob.gradiant.face.databases.ReplayAttackDatabase">
+<em class="property">class </em><code class="descclassname">bob.gradiant.face.databases.</code><code class="descname">ReplayAttackDatabase</code><span class="sig-paren">(</span><em>base_path</em>, <em>annotation_base_path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_attack/replay_attack_database.html#ReplayAttackDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayAttackDatabase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bob.gradiant.core.classes.databases.database.Database</span></code></p>
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.ReplayAttackDatabase.name">
+<em class="property">static </em><code class="descname">name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_attack/replay_attack_database.html#ReplayAttackDatabase.name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayAttackDatabase.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.ReplayAttackDatabase.is_a_collection_of_databases">
+<em class="property">static </em><code class="descname">is_a_collection_of_databases</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_attack/replay_attack_database.html#ReplayAttackDatabase.is_a_collection_of_databases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayAttackDatabase.is_a_collection_of_databases" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.ReplayAttackDatabase.info">
+<em class="property">static </em><code class="descname">info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_attack/replay_attack_database.html#ReplayAttackDatabase.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayAttackDatabase.info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.ReplayAttackDatabase.get_protocols">
+<em class="property">static </em><code class="descname">get_protocols</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_attack/replay_attack_database.html#ReplayAttackDatabase.get_protocols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayAttackDatabase.get_protocols" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.ReplayAttackDatabase.get_subsets">
+<em class="property">static </em><code class="descname">get_subsets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_attack/replay_attack_database.html#ReplayAttackDatabase.get_subsets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayAttackDatabase.get_subsets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.ReplayAttackDatabase.get_capture_devices">
+<em class="property">static </em><code class="descname">get_capture_devices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_attack/replay_attack_database.html#ReplayAttackDatabase.get_capture_devices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayAttackDatabase.get_capture_devices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.ReplayAttackDatabase.get_attack_dict">
+<em class="property">static </em><code class="descname">get_attack_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_attack/replay_attack_database.html#ReplayAttackDatabase.get_attack_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayAttackDatabase.get_attack_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.ReplayAttackDatabase.get_all_accesses">
+<code class="descname">get_all_accesses</code><span class="sig-paren">(</span><em>access_modifier=&lt;bob.gradiant.core.classes.accesses.access_modifier.AccessModifier object&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_attack/replay_attack_database.html#ReplayAttackDatabase.get_all_accesses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayAttackDatabase.get_all_accesses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.ReplayAttackDatabase.get_enrolment_access">
+<code class="descname">get_enrolment_access</code><span class="sig-paren">(</span><em>access_modifier=&lt;bob.gradiant.core.classes.accesses.access_modifier.AccessModifier object&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_attack/replay_attack_database.html#ReplayAttackDatabase.get_enrolment_access"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayAttackDatabase.get_enrolment_access" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.ReplayAttackDatabase.get_all_labels">
+<code class="descname">get_all_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_attack/replay_attack_database.html#ReplayAttackDatabase.get_all_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayAttackDatabase.get_all_labels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.ReplayAttackDatabase.get_ground_truth">
+<code class="descname">get_ground_truth</code><span class="sig-paren">(</span><em>protocol</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_attack/replay_attack_database.html#ReplayAttackDatabase.get_ground_truth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayAttackDatabase.get_ground_truth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bob.gradiant.face.databases.ReplayMobileDatabase">
+<em class="property">class </em><code class="descclassname">bob.gradiant.face.databases.</code><code class="descname">ReplayMobileDatabase</code><span class="sig-paren">(</span><em>base_path</em>, <em>annotation_base_path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_mobile/replay_mobile_database.html#ReplayMobileDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayMobileDatabase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bob.gradiant.core.classes.databases.database.Database</span></code></p>
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.ReplayMobileDatabase.name">
+<em class="property">static </em><code class="descname">name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_mobile/replay_mobile_database.html#ReplayMobileDatabase.name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayMobileDatabase.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.ReplayMobileDatabase.is_a_collection_of_databases">
+<em class="property">static </em><code class="descname">is_a_collection_of_databases</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_mobile/replay_mobile_database.html#ReplayMobileDatabase.is_a_collection_of_databases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayMobileDatabase.is_a_collection_of_databases" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.ReplayMobileDatabase.info">
+<em class="property">static </em><code class="descname">info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_mobile/replay_mobile_database.html#ReplayMobileDatabase.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayMobileDatabase.info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.ReplayMobileDatabase.get_protocols">
+<em class="property">static </em><code class="descname">get_protocols</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_mobile/replay_mobile_database.html#ReplayMobileDatabase.get_protocols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayMobileDatabase.get_protocols" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.ReplayMobileDatabase.get_subsets">
+<em class="property">static </em><code class="descname">get_subsets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_mobile/replay_mobile_database.html#ReplayMobileDatabase.get_subsets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayMobileDatabase.get_subsets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.ReplayMobileDatabase.get_capture_devices">
+<em class="property">static </em><code class="descname">get_capture_devices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_mobile/replay_mobile_database.html#ReplayMobileDatabase.get_capture_devices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayMobileDatabase.get_capture_devices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.ReplayMobileDatabase.get_attack_dict">
+<em class="property">static </em><code class="descname">get_attack_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_mobile/replay_mobile_database.html#ReplayMobileDatabase.get_attack_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayMobileDatabase.get_attack_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.ReplayMobileDatabase.get_all_accesses">
+<code class="descname">get_all_accesses</code><span class="sig-paren">(</span><em>access_modifier=&lt;bob.gradiant.core.classes.accesses.access_modifier.AccessModifier object&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_mobile/replay_mobile_database.html#ReplayMobileDatabase.get_all_accesses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayMobileDatabase.get_all_accesses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.ReplayMobileDatabase.get_enrolment_access">
+<code class="descname">get_enrolment_access</code><span class="sig-paren">(</span><em>access_modifier=&lt;bob.gradiant.core.classes.accesses.access_modifier.AccessModifier object&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_mobile/replay_mobile_database.html#ReplayMobileDatabase.get_enrolment_access"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayMobileDatabase.get_enrolment_access" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.ReplayMobileDatabase.get_rotation_rule">
+<em class="property">static </em><code class="descname">get_rotation_rule</code><span class="sig-paren">(</span><em>access</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_mobile/replay_mobile_database.html#ReplayMobileDatabase.get_rotation_rule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayMobileDatabase.get_rotation_rule" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.ReplayMobileDatabase.get_all_labels">
+<code class="descname">get_all_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_mobile/replay_mobile_database.html#ReplayMobileDatabase.get_all_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayMobileDatabase.get_all_labels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.ReplayMobileDatabase.get_ground_truth">
+<code class="descname">get_ground_truth</code><span class="sig-paren">(</span><em>protocol</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/replay_mobile/replay_mobile_database.html#ReplayMobileDatabase.get_ground_truth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ReplayMobileDatabase.get_ground_truth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bob.gradiant.face.databases.RoseYoutuDatabase">
+<em class="property">class </em><code class="descclassname">bob.gradiant.face.databases.</code><code class="descname">RoseYoutuDatabase</code><span class="sig-paren">(</span><em>base_path</em>, <em>annotation_base_path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/rose_youtu/rose_youtu_database.html#RoseYoutuDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.RoseYoutuDatabase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bob.gradiant.core.classes.databases.database.Database</span></code></p>
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.RoseYoutuDatabase.name">
+<em class="property">static </em><code class="descname">name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/rose_youtu/rose_youtu_database.html#RoseYoutuDatabase.name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.RoseYoutuDatabase.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.RoseYoutuDatabase.is_a_collection_of_databases">
+<em class="property">static </em><code class="descname">is_a_collection_of_databases</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/rose_youtu/rose_youtu_database.html#RoseYoutuDatabase.is_a_collection_of_databases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.RoseYoutuDatabase.is_a_collection_of_databases" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.RoseYoutuDatabase.info">
+<em class="property">static </em><code class="descname">info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/rose_youtu/rose_youtu_database.html#RoseYoutuDatabase.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.RoseYoutuDatabase.info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.RoseYoutuDatabase.get_protocols">
+<em class="property">static </em><code class="descname">get_protocols</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/rose_youtu/rose_youtu_database.html#RoseYoutuDatabase.get_protocols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.RoseYoutuDatabase.get_protocols" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.RoseYoutuDatabase.get_subsets">
+<em class="property">static </em><code class="descname">get_subsets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/rose_youtu/rose_youtu_database.html#RoseYoutuDatabase.get_subsets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.RoseYoutuDatabase.get_subsets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.RoseYoutuDatabase.get_capture_devices">
+<em class="property">static </em><code class="descname">get_capture_devices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/rose_youtu/rose_youtu_database.html#RoseYoutuDatabase.get_capture_devices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.RoseYoutuDatabase.get_capture_devices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.RoseYoutuDatabase.get_attack_dict">
+<em class="property">static </em><code class="descname">get_attack_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/rose_youtu/rose_youtu_database.html#RoseYoutuDatabase.get_attack_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.RoseYoutuDatabase.get_attack_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.RoseYoutuDatabase.get_all_accesses">
+<code class="descname">get_all_accesses</code><span class="sig-paren">(</span><em>access_modifier=&lt;bob.gradiant.core.classes.accesses.access_modifier.AccessModifier object&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/rose_youtu/rose_youtu_database.html#RoseYoutuDatabase.get_all_accesses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.RoseYoutuDatabase.get_all_accesses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.RoseYoutuDatabase.get_all_labels">
+<code class="descname">get_all_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/rose_youtu/rose_youtu_database.html#RoseYoutuDatabase.get_all_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.RoseYoutuDatabase.get_all_labels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.RoseYoutuDatabase.get_ground_truth">
+<code class="descname">get_ground_truth</code><span class="sig-paren">(</span><em>protocol</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/rose_youtu/rose_youtu_database.html#RoseYoutuDatabase.get_ground_truth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.RoseYoutuDatabase.get_ground_truth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bob.gradiant.face.databases.SiwDatabase">
+<em class="property">class </em><code class="descclassname">bob.gradiant.face.databases.</code><code class="descname">SiwDatabase</code><span class="sig-paren">(</span><em>base_path</em>, <em>annotation_base_path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/siw/siw_database.html#SiwDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.SiwDatabase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bob.gradiant.core.classes.databases.database.Database</span></code></p>
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.SiwDatabase.name">
+<em class="property">static </em><code class="descname">name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/siw/siw_database.html#SiwDatabase.name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.SiwDatabase.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.SiwDatabase.is_a_collection_of_databases">
+<em class="property">static </em><code class="descname">is_a_collection_of_databases</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/siw/siw_database.html#SiwDatabase.is_a_collection_of_databases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.SiwDatabase.is_a_collection_of_databases" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.SiwDatabase.info">
+<em class="property">static </em><code class="descname">info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/siw/siw_database.html#SiwDatabase.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.SiwDatabase.info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.SiwDatabase.get_protocols">
+<em class="property">static </em><code class="descname">get_protocols</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/siw/siw_database.html#SiwDatabase.get_protocols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.SiwDatabase.get_protocols" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.SiwDatabase.get_subsets">
+<em class="property">static </em><code class="descname">get_subsets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/siw/siw_database.html#SiwDatabase.get_subsets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.SiwDatabase.get_subsets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.SiwDatabase.get_capture_devices">
+<em class="property">static </em><code class="descname">get_capture_devices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/siw/siw_database.html#SiwDatabase.get_capture_devices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.SiwDatabase.get_capture_devices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.SiwDatabase.get_attack_dict">
+<em class="property">static </em><code class="descname">get_attack_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/siw/siw_database.html#SiwDatabase.get_attack_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.SiwDatabase.get_attack_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.SiwDatabase.get_all_accesses">
+<code class="descname">get_all_accesses</code><span class="sig-paren">(</span><em>access_modifier=&lt;bob.gradiant.core.classes.accesses.access_modifier.AccessModifier object&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/siw/siw_database.html#SiwDatabase.get_all_accesses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.SiwDatabase.get_all_accesses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.SiwDatabase.get_all_labels">
+<code class="descname">get_all_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/siw/siw_database.html#SiwDatabase.get_all_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.SiwDatabase.get_all_labels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.SiwDatabase.get_ground_truth">
+<code class="descname">get_ground_truth</code><span class="sig-paren">(</span><em>protocol</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/siw/siw_database.html#SiwDatabase.get_ground_truth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.SiwDatabase.get_ground_truth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bob.gradiant.face.databases.ThreedmadDatabase">
+<em class="property">class </em><code class="descclassname">bob.gradiant.face.databases.</code><code class="descname">ThreedmadDatabase</code><span class="sig-paren">(</span><em>base_path</em>, <em>annotation_base_path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/threedmad/threedmad_database.html#ThreedmadDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ThreedmadDatabase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bob.gradiant.core.classes.databases.database.Database</span></code></p>
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.ThreedmadDatabase.name">
+<em class="property">static </em><code class="descname">name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/threedmad/threedmad_database.html#ThreedmadDatabase.name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ThreedmadDatabase.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.ThreedmadDatabase.is_a_collection_of_databases">
+<em class="property">static </em><code class="descname">is_a_collection_of_databases</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/threedmad/threedmad_database.html#ThreedmadDatabase.is_a_collection_of_databases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ThreedmadDatabase.is_a_collection_of_databases" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.ThreedmadDatabase.info">
+<em class="property">static </em><code class="descname">info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/threedmad/threedmad_database.html#ThreedmadDatabase.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ThreedmadDatabase.info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.ThreedmadDatabase.get_protocols">
+<em class="property">static </em><code class="descname">get_protocols</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/threedmad/threedmad_database.html#ThreedmadDatabase.get_protocols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ThreedmadDatabase.get_protocols" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.ThreedmadDatabase.get_subsets">
+<em class="property">static </em><code class="descname">get_subsets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/threedmad/threedmad_database.html#ThreedmadDatabase.get_subsets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ThreedmadDatabase.get_subsets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.ThreedmadDatabase.get_capture_devices">
+<em class="property">static </em><code class="descname">get_capture_devices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/threedmad/threedmad_database.html#ThreedmadDatabase.get_capture_devices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ThreedmadDatabase.get_capture_devices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.ThreedmadDatabase.get_attack_dict">
+<em class="property">static </em><code class="descname">get_attack_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/threedmad/threedmad_database.html#ThreedmadDatabase.get_attack_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ThreedmadDatabase.get_attack_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.ThreedmadDatabase.get_all_accesses">
+<code class="descname">get_all_accesses</code><span class="sig-paren">(</span><em>access_modifier=&lt;bob.gradiant.core.classes.accesses.access_modifier.AccessModifier object&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/threedmad/threedmad_database.html#ThreedmadDatabase.get_all_accesses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ThreedmadDatabase.get_all_accesses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.ThreedmadDatabase.get_all_labels">
+<code class="descname">get_all_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/threedmad/threedmad_database.html#ThreedmadDatabase.get_all_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ThreedmadDatabase.get_all_labels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.ThreedmadDatabase.get_ground_truth">
+<code class="descname">get_ground_truth</code><span class="sig-paren">(</span><em>protocol</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/threedmad/threedmad_database.html#ThreedmadDatabase.get_ground_truth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.ThreedmadDatabase.get_ground_truth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bob.gradiant.face.databases.UvadDatabase">
+<em class="property">class </em><code class="descclassname">bob.gradiant.face.databases.</code><code class="descname">UvadDatabase</code><span class="sig-paren">(</span><em>base_path</em>, <em>annotation_base_path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/uvad/uvad_database.html#UvadDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.UvadDatabase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bob.gradiant.core.classes.databases.database.Database</span></code></p>
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.UvadDatabase.name">
+<em class="property">static </em><code class="descname">name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/uvad/uvad_database.html#UvadDatabase.name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.UvadDatabase.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.UvadDatabase.is_a_collection_of_databases">
+<em class="property">static </em><code class="descname">is_a_collection_of_databases</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/uvad/uvad_database.html#UvadDatabase.is_a_collection_of_databases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.UvadDatabase.is_a_collection_of_databases" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.UvadDatabase.info">
+<em class="property">static </em><code class="descname">info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/uvad/uvad_database.html#UvadDatabase.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.UvadDatabase.info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.UvadDatabase.get_protocols">
+<em class="property">static </em><code class="descname">get_protocols</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/uvad/uvad_database.html#UvadDatabase.get_protocols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.UvadDatabase.get_protocols" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.UvadDatabase.get_subsets">
+<em class="property">static </em><code class="descname">get_subsets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/uvad/uvad_database.html#UvadDatabase.get_subsets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.UvadDatabase.get_subsets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.UvadDatabase.get_capture_devices">
+<em class="property">static </em><code class="descname">get_capture_devices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/uvad/uvad_database.html#UvadDatabase.get_capture_devices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.UvadDatabase.get_capture_devices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="bob.gradiant.face.databases.UvadDatabase.get_attack_dict">
+<em class="property">static </em><code class="descname">get_attack_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/uvad/uvad_database.html#UvadDatabase.get_attack_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.UvadDatabase.get_attack_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.UvadDatabase.get_all_accesses">
+<code class="descname">get_all_accesses</code><span class="sig-paren">(</span><em>access_modifier=&lt;bob.gradiant.core.classes.accesses.access_modifier.AccessModifier object&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/uvad/uvad_database.html#UvadDatabase.get_all_accesses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.UvadDatabase.get_all_accesses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.UvadDatabase.get_all_labels">
+<code class="descname">get_all_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/uvad/uvad_database.html#UvadDatabase.get_all_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.UvadDatabase.get_all_labels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bob.gradiant.face.databases.UvadDatabase.get_ground_truth">
+<code class="descname">get_ground_truth</code><span class="sig-paren">(</span><em>protocol</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bob/gradiant/face/databases/classes/uvad/uvad_database.html#UvadDatabase.get_ground_truth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bob.gradiant.face.databases.UvadDatabase.get_ground_truth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="bob.gradiant.face.databases" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Gradiant
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

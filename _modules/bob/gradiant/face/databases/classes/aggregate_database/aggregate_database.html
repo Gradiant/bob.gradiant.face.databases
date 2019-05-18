@@ -1,0 +1,491 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>bob.gradiant.face.databases.classes.aggregate_database.aggregate_database &mdash; bob.gradiant.face.databases 2.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../../../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../../search.html" /> 
+
+  
+  <script src="../../../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../../../index.html" class="icon icon-home"> bob.gradiant.face.databases
+          
+
+          
+            
+            <img src="../../../../../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../py_api.html">Python API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../../index.html">bob.gradiant.face.databases</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>bob.gradiant.face.databases.classes.aggregate_database.aggregate_database</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for bob.gradiant.face.databases.classes.aggregate_database.aggregate_database</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># Gradiant&#39;s Biometrics Team &lt;biometrics.support@gradiant.org&gt;</span>
+<span class="c1"># Copyright (C) 2019+ Gradiant, Vigo, Spain</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.core</span> <span class="k">import</span> <span class="n">Database</span><span class="p">,</span> <span class="n">AccessModifier</span>
+
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes.aggregate_database.parsed_databases</span> <span class="k">import</span> <span class="n">AGGREGATE_SUBSETS</span>
+
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes.aggregate_database.protocol_checker</span> <span class="k">import</span> <span class="n">protocol_checker</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes.aggregate_database.filter_labels_by_protocol</span> <span class="k">import</span> <span class="n">filter_labels_by_protocol</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes.aggregate_database.protocols.cross_conditions</span> <span class="k">import</span> \
+    <span class="n">get_cross_conditions_optimal_protocol</span><span class="p">,</span> <span class="n">get_cross_conditions_adverse_protocol</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes.aggregate_database.protocols.cross_device</span> <span class="k">import</span> <span class="n">get_cross_device_test_protocol</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes.aggregate_database.protocols.cross_device_and_face_resolution</span> <span class="k">import</span> \
+    <span class="n">get_cross_device_and_face_resolution_protocol</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes.aggregate_database.protocols.cross_face_resolution</span> <span class="k">import</span> \
+    <span class="n">get_cross_face_resolution_protocol</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes.aggregate_database.protocols.grandtest</span> <span class="k">import</span> <span class="n">get_grandtest_protocol</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes.aggregate_database.protocols.cross_dataset</span> <span class="k">import</span> \
+    <span class="n">get_cross_database_test_protocol</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes.aggregate_database.protocols.one_pai</span> <span class="k">import</span> <span class="n">get_one_pai_protocol</span>
+
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes.casia_fasd</span> <span class="k">import</span> <span class="n">CasiaFasdDatabase</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes.casia_surf</span> <span class="k">import</span> <span class="n">CasiaSurfDatabase</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes.csmad</span> <span class="k">import</span> <span class="n">CsmadDatabase</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes.hkbu</span> <span class="k">import</span> <span class="n">HkbuDatabase</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes.msu_mfsd</span> <span class="k">import</span> <span class="n">MsuMfsdDatabase</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes.replay_attack</span> <span class="k">import</span> <span class="n">ReplayAttackDatabase</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes.replay_mobile</span> <span class="k">import</span> <span class="n">ReplayMobileDatabase</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes.rose_youtu</span> <span class="k">import</span> <span class="n">RoseYoutuDatabase</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes.oulu_npu</span> <span class="k">import</span> <span class="n">OuluNpuDatabase</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes.siw</span> <span class="k">import</span> <span class="n">SiwDatabase</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes.threedmad</span> <span class="k">import</span> <span class="n">ThreedmadDatabase</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes.uvad</span> <span class="k">import</span> <span class="n">UvadDatabase</span>
+
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes</span> <span class="k">import</span> <span class="n">inter_database_categorisation</span> <span class="k">as</span> <span class="n">inter_db_cat</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.test.test_resources</span> <span class="k">import</span> <span class="n">TestResources</span>
+
+<span class="n">ALL_DATABASE_PROTOCOLS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;casia-fasd&#39;</span><span class="p">:</span> <span class="s1">&#39;grandtest&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;casia-surf&#39;</span><span class="p">:</span> <span class="s1">&#39;grandtest&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;csmad&#39;</span><span class="p">:</span> <span class="s1">&#39;grandtest&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;hkbu&#39;</span><span class="p">:</span> <span class="s1">&#39;grandtest&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;msu-mfsd&#39;</span><span class="p">:</span> <span class="s1">&#39;grandtest&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;oulu-npu&#39;</span><span class="p">:</span> <span class="s1">&#39;grandtest&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;replay-attack&#39;</span><span class="p">:</span> <span class="s1">&#39;grandtest&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;replay-mobile&#39;</span><span class="p">:</span> <span class="s1">&#39;grandtest&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;rose-youtu&#39;</span><span class="p">:</span> <span class="s1">&#39;grandtest&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;siw&#39;</span><span class="p">:</span> <span class="s1">&#39;protocol_1&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;3dmad&#39;</span><span class="p">:</span> <span class="s1">&#39;grandtest&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;uvad&#39;</span><span class="p">:</span> <span class="s1">&#39;grandtest&#39;</span><span class="p">}</span>
+
+
+<div class="viewcode-block" id="AggregateDatabase"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.AggregateDatabase">[docs]</a><span class="k">class</span> <span class="nc">AggregateDatabase</span><span class="p">(</span><span class="n">Database</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_path</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">base_path</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;For AggregateDatabase a dict with every base paths are required&#39;</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AggregateDatabase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">base_path</span><span class="p">[</span><span class="s1">&#39;replay-attack&#39;</span><span class="p">])</span>  <span class="c1"># only for fit the interface</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">included_databases</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;casia-fasd&#39;</span><span class="p">:</span> <span class="n">CasiaFasdDatabase</span><span class="p">(</span><span class="n">base_path</span><span class="p">[</span><span class="s1">&#39;casia-fasd&#39;</span><span class="p">]),</span>
+            <span class="s1">&#39;casia-surf&#39;</span><span class="p">:</span> <span class="n">CasiaSurfDatabase</span><span class="p">(</span><span class="n">base_path</span><span class="p">[</span><span class="s1">&#39;casia-surf&#39;</span><span class="p">]),</span>
+            <span class="s1">&#39;csmad&#39;</span><span class="p">:</span> <span class="n">CsmadDatabase</span><span class="p">(</span><span class="n">base_path</span><span class="p">[</span><span class="s1">&#39;csmad&#39;</span><span class="p">]),</span>
+            <span class="s1">&#39;hkbu&#39;</span><span class="p">:</span> <span class="n">HkbuDatabase</span><span class="p">(</span><span class="n">base_path</span><span class="p">[</span><span class="s1">&#39;hkbu&#39;</span><span class="p">]),</span>
+            <span class="s1">&#39;msu-mfsd&#39;</span><span class="p">:</span> <span class="n">MsuMfsdDatabase</span><span class="p">(</span><span class="n">base_path</span><span class="p">[</span><span class="s1">&#39;msu-mfsd&#39;</span><span class="p">]),</span>
+            <span class="s1">&#39;oulu-npu&#39;</span><span class="p">:</span> <span class="n">OuluNpuDatabase</span><span class="p">(</span><span class="n">base_path</span><span class="p">[</span><span class="s1">&#39;oulu-npu&#39;</span><span class="p">]),</span>
+            <span class="s1">&#39;replay-attack&#39;</span><span class="p">:</span> <span class="n">ReplayAttackDatabase</span><span class="p">(</span><span class="n">base_path</span><span class="p">[</span><span class="s1">&#39;replay-attack&#39;</span><span class="p">]),</span>
+            <span class="s1">&#39;replay-mobile&#39;</span><span class="p">:</span> <span class="n">ReplayMobileDatabase</span><span class="p">(</span><span class="n">base_path</span><span class="p">[</span><span class="s1">&#39;replay-mobile&#39;</span><span class="p">]),</span>
+            <span class="s1">&#39;rose-youtu&#39;</span><span class="p">:</span> <span class="n">RoseYoutuDatabase</span><span class="p">(</span><span class="n">base_path</span><span class="p">[</span><span class="s1">&#39;rose-youtu&#39;</span><span class="p">]),</span>
+            <span class="s1">&#39;siw&#39;</span><span class="p">:</span> <span class="n">SiwDatabase</span><span class="p">(</span><span class="n">base_path</span><span class="p">[</span><span class="s1">&#39;siw&#39;</span><span class="p">]),</span>
+            <span class="s1">&#39;3dmad&#39;</span><span class="p">:</span> <span class="n">ThreedmadDatabase</span><span class="p">(</span><span class="n">base_path</span><span class="p">[</span><span class="s1">&#39;3dmad&#39;</span><span class="p">]),</span>
+            <span class="s1">&#39;uvad&#39;</span><span class="p">:</span> <span class="n">UvadDatabase</span><span class="p">(</span><span class="n">base_path</span><span class="p">[</span><span class="s1">&#39;uvad&#39;</span><span class="p">])}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_dict_all_labels</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">protocols</span> <span class="o">=</span> <span class="n">AggregateDatabase</span><span class="o">.</span><span class="n">get_available_protocols</span><span class="p">()</span>
+
+<div class="viewcode-block" id="AggregateDatabase.set_new_custom_protocol"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.AggregateDatabase.set_new_custom_protocol">[docs]</a>    <span class="k">def</span> <span class="nf">set_new_custom_protocol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_protocol_dict</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Example:</span>
+
+<span class="sd">         new_protocol_dict = {&quot;name-protocol&quot;: PROTOCOL}</span>
+
+<span class="sd">         e.g grandtest</span>
+
+<span class="sd">         new_protocol_dict = {&quot;grandtest&quot;: {&quot;Train&quot;: None, &quot;Dev&quot;: None, &quot;Test&quot;: Nones}</span>
+
+<span class="sd">        :param new_protocol_dict:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">name_protocol</span><span class="p">,</span> <span class="n">protocol</span> <span class="ow">in</span> <span class="n">new_protocol_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">protocol_checker</span><span class="p">(</span><span class="n">protocol</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">protocols</span><span class="p">[</span><span class="n">name_protocol</span><span class="p">]</span> <span class="o">=</span> <span class="n">protocol</span></div>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">AggregateDatabase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__str__</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AggregateDatabase.name"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.AggregateDatabase.name">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">():</span>
+        <span class="k">return</span> <span class="s1">&#39;aggregate-database&#39;</span></div>
+
+<div class="viewcode-block" id="AggregateDatabase.get_parsed_databases"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.AggregateDatabase.get_parsed_databases">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_parsed_databases</span><span class="p">():</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">ALL_DATABASE_PROTOCOLS</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AggregateDatabase.get_available_protocols"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.AggregateDatabase.get_available_protocols">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_available_protocols</span><span class="p">():</span>
+
+        <span class="n">parsed_databases</span> <span class="o">=</span> <span class="n">AggregateDatabase</span><span class="o">.</span><span class="n">get_parsed_databases</span><span class="p">()</span>
+        <span class="n">available_protocols</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;grandtest&quot;</span><span class="p">:</span> <span class="n">get_grandtest_protocol</span><span class="p">()}</span>
+        <span class="k">for</span> <span class="n">device</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;webcam&#39;</span><span class="p">,</span> <span class="s1">&#39;mobile&#39;</span><span class="p">,</span> <span class="s2">&quot;digital_camera&quot;</span><span class="p">]:</span>
+            <span class="n">name_protocol</span> <span class="o">=</span> <span class="s2">&quot;cross-device-test-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;mobile&quot;</span><span class="p">,</span> <span class="s2">&quot;mobile-tablet&quot;</span><span class="p">)</span>
+            <span class="n">available_protocols</span><span class="p">[</span><span class="n">name_protocol</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_cross_device_test_protocol</span><span class="p">(</span><span class="n">device</span><span class="p">,</span>
+                                                                                <span class="n">parsed_databases</span><span class="p">,</span>
+                                                                                <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_CAPTURE_DEVICE_CATEGORISATION</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">database</span> <span class="ow">in</span> <span class="n">AggregateDatabase</span><span class="o">.</span><span class="n">get_parsed_databases</span><span class="p">():</span>
+            <span class="n">name_protocol</span> <span class="o">=</span> <span class="s2">&quot;cross-dataset-test-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">database</span><span class="p">)</span>
+            <span class="n">available_protocols</span><span class="p">[</span><span class="n">name_protocol</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_cross_database_test_protocol</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">parsed_databases</span><span class="p">)</span>
+
+        <span class="n">name_template_cross_face_res</span> <span class="o">=</span> <span class="s2">&quot;cross-face-resolution-train-</span><span class="si">{}</span><span class="s2">-test-</span><span class="si">{}</span><span class="s2">-faces&quot;</span>
+        <span class="n">available_protocols</span><span class="p">[</span><span class="n">name_template_cross_face_res</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;small-and-medium&quot;</span><span class="p">,</span>
+                                                                <span class="s2">&quot;big&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="n">get_cross_face_resolution_protocol</span><span class="p">(</span>
+            <span class="p">[</span><span class="s2">&quot;small_face&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;medium_face&quot;</span><span class="p">],</span>
+            <span class="p">[</span><span class="s2">&quot;big_face&quot;</span><span class="p">],</span>
+            <span class="n">parsed_databases</span><span class="p">)</span>
+        <span class="n">available_protocols</span><span class="p">[</span><span class="n">name_template_cross_face_res</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;big-and-medium&quot;</span><span class="p">,</span>
+                                                                <span class="s2">&quot;small&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="n">get_cross_face_resolution_protocol</span><span class="p">(</span>
+            <span class="p">[</span><span class="s2">&quot;big_face&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;medium_face&quot;</span><span class="p">],</span>
+            <span class="p">[</span><span class="s2">&quot;small_face&quot;</span><span class="p">],</span>
+            <span class="n">parsed_databases</span><span class="p">)</span>
+
+        <span class="n">available_protocols</span><span class="p">[</span><span class="s2">&quot;cross-conditions-optimal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_cross_conditions_optimal_protocol</span><span class="p">(</span><span class="n">parsed_databases</span><span class="p">)</span>
+        <span class="n">available_protocols</span><span class="p">[</span><span class="s2">&quot;cross-conditions-adverse&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_cross_conditions_adverse_protocol</span><span class="p">(</span><span class="n">parsed_databases</span><span class="p">)</span>
+
+        <span class="n">available_pais</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_PAI_CATEGORISATION</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">pai</span> <span class="ow">in</span> <span class="n">available_pais</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">pai</span> <span class="o">==</span> <span class="s2">&quot;real&quot;</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">available_protocols</span><span class="p">[</span><span class="s2">&quot;one-pai-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pai</span><span class="p">)]</span> <span class="o">=</span> <span class="n">get_one_pai_protocol</span><span class="p">(</span><span class="n">parsed_databases</span><span class="p">,</span> <span class="n">pai</span><span class="p">)</span>
+
+            <span class="c1"># TODO: Review it. It seems filtering is not working as expected</span>
+            <span class="c1"># available_protocols[&quot;unseen-attack-{}&quot;.format(pai)] = get_unseen_attack_protocol(parsed_databases,</span>
+            <span class="c1">#                                                                                 pai,</span>
+            <span class="c1">#                                                                                 available_pais)</span>
+
+        <span class="c1"># Ad-hoc protocol</span>
+        <span class="n">available_protocols</span><span class="p">[</span><span class="s2">&quot;cross-device-and-face-resolution&quot;</span><span class="p">]</span> <span class="o">=</span> \
+            <span class="n">get_cross_device_and_face_resolution_protocol</span><span class="p">([</span><span class="s2">&quot;small_face&quot;</span><span class="p">,</span> <span class="s2">&quot;medium_face&quot;</span><span class="p">],</span>
+                                                          <span class="p">[</span><span class="s2">&quot;big_face&quot;</span><span class="p">],</span>
+                                                          <span class="p">[</span><span class="s2">&quot;webcam&quot;</span><span class="p">,</span> <span class="s2">&quot;digital_camera&quot;</span><span class="p">],</span>
+                                                          <span class="p">[</span><span class="s2">&quot;tablet&quot;</span><span class="p">,</span> <span class="s2">&quot;mobile&quot;</span><span class="p">],</span>
+                                                          <span class="n">parsed_databases</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">available_protocols</span></div>
+
+<div class="viewcode-block" id="AggregateDatabase.is_a_collection_of_databases"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.AggregateDatabase.is_a_collection_of_databases">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">is_a_collection_of_databases</span><span class="p">():</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="AggregateDatabase.info"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.AggregateDatabase.info">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">info</span><span class="p">():</span>
+        <span class="n">list_of_dicts</span> <span class="o">=</span> <span class="p">[</span><span class="n">CasiaFasdDatabase</span><span class="o">.</span><span class="n">info</span><span class="p">(),</span> <span class="n">CsmadDatabase</span><span class="o">.</span><span class="n">info</span><span class="p">(),</span> <span class="n">HkbuDatabase</span><span class="o">.</span><span class="n">info</span><span class="p">(),</span>
+                         <span class="n">MsuMfsdDatabase</span><span class="o">.</span><span class="n">info</span><span class="p">(),</span> <span class="n">OuluNpuDatabase</span><span class="o">.</span><span class="n">info</span><span class="p">(),</span> <span class="n">ReplayAttackDatabase</span><span class="o">.</span><span class="n">info</span><span class="p">(),</span>
+                         <span class="n">ReplayMobileDatabase</span><span class="o">.</span><span class="n">info</span><span class="p">(),</span> <span class="n">RoseYoutuDatabase</span><span class="o">.</span><span class="n">info</span><span class="p">(),</span> <span class="n">SiwDatabase</span><span class="o">.</span><span class="n">info</span><span class="p">(),</span>
+                         <span class="n">ThreedmadDatabase</span><span class="o">.</span><span class="n">info</span><span class="p">(),</span> <span class="n">UvadDatabase</span><span class="o">.</span><span class="n">info</span><span class="p">()]</span>
+
+        <span class="n">dict_info</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;users&#39;</span><span class="p">:</span> <span class="nb">sum</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;users&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">list_of_dicts</span><span class="p">]),</span>
+                     <span class="s1">&#39;Train videos&#39;</span><span class="p">:</span> <span class="nb">sum</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;Train videos&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">list_of_dicts</span><span class="p">]),</span>
+                     <span class="s1">&#39;Dev videos&#39;</span><span class="p">:</span> <span class="nb">sum</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;Dev videos&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">list_of_dicts</span><span class="p">]),</span>
+                     <span class="s1">&#39;Test videos&#39;</span><span class="p">:</span> <span class="nb">sum</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;Test videos&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">list_of_dicts</span><span class="p">]),</span>
+                     <span class="p">}</span>
+        <span class="k">return</span> <span class="n">dict_info</span></div>
+
+<div class="viewcode-block" id="AggregateDatabase.get_protocols"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.AggregateDatabase.get_protocols">[docs]</a>    <span class="k">def</span> <span class="nf">get_protocols</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">protocols</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AggregateDatabase.get_subsets"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.AggregateDatabase.get_subsets">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_subsets</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">AGGREGATE_SUBSETS</span></div>
+
+<div class="viewcode-block" id="AggregateDatabase.get_capture_devices"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.AggregateDatabase.get_capture_devices">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_capture_devices</span><span class="p">():</span>
+        <span class="n">capture_devices_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">capt_device</span><span class="p">,</span> <span class="n">subtypes</span> <span class="ow">in</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_CAPTURE_DEVICE_CATEGORISATION</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">subtype</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">subtypes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">capture_devices_dict</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">capt_device</span><span class="p">,</span> <span class="n">subtype</span><span class="p">)]</span> <span class="o">=</span> <span class="n">label</span>
+
+        <span class="k">return</span> <span class="n">capture_devices_dict</span></div>
+
+<div class="viewcode-block" id="AggregateDatabase.get_attack_dict"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.AggregateDatabase.get_attack_dict">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_attack_dict</span><span class="p">():</span>
+        <span class="n">attack_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">pai</span><span class="p">,</span> <span class="n">subtypes</span> <span class="ow">in</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_PAI_CATEGORISATION</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">pai</span> <span class="o">==</span> <span class="s1">&#39;real&#39;</span><span class="p">:</span>
+                <span class="n">attack_dict</span><span class="p">[</span><span class="s1">&#39;real&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_PAI_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;real&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">subtype</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">subtypes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">attack_dict</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pai</span><span class="p">,</span> <span class="n">subtype</span><span class="p">)]</span> <span class="o">=</span> <span class="n">label</span>
+
+        <span class="k">return</span> <span class="n">attack_dict</span></div>
+
+<div class="viewcode-block" id="AggregateDatabase.get_all_accesses"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.AggregateDatabase.get_all_accesses">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_accesses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">access_modifier</span><span class="o">=</span><span class="n">AccessModifier</span><span class="p">()):</span>
+        <span class="n">dict_all_accesses</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;All&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+
+        <span class="k">for</span> <span class="n">database</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">included_databases</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+            <span class="n">dict_all_accesses_one_database</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">get_all_accesses</span><span class="p">(</span><span class="n">access_modifier</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">subset</span> <span class="ow">in</span> <span class="n">dict_all_accesses_one_database</span><span class="p">:</span>
+                <span class="n">subset_accesses</span> <span class="o">=</span> <span class="n">dict_all_accesses_one_database</span><span class="p">[</span><span class="n">subset</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">access</span> <span class="ow">in</span> <span class="n">subset_accesses</span><span class="p">:</span>
+                    <span class="n">access</span><span class="o">.</span><span class="n">database_name</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+                <span class="n">dict_all_accesses</span><span class="p">[</span><span class="s1">&#39;All&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">subset_accesses</span>
+        <span class="k">return</span> <span class="n">dict_all_accesses</span></div>
+
+<div class="viewcode-block" id="AggregateDatabase.get_all_labels"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.AggregateDatabase.get_all_labels">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">copy_dict_all_labels</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dict_all_labels</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">copy_dict_all_labels</span></div>
+
+<div class="viewcode-block" id="AggregateDatabase.set_dict_all_labels"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.AggregateDatabase.set_dict_all_labels">[docs]</a>    <span class="k">def</span> <span class="nf">set_dict_all_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dict_all_labels</span> <span class="o">=</span> <span class="n">TestResources</span><span class="o">.</span><span class="n">get_aggregated_database_all_dict_labels</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;WARNING (AggregateDatabase.get_all_labels): Labels resource file &quot;</span>
+                          <span class="s2">&quot;[resources/aggregate_database_all_labels.pickle] not found. &quot;</span>
+                          <span class="s2">&quot;Extracting all labels from scratch may take a while.&quot;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">dict_all_labels</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Train&#39;</span><span class="p">:</span> <span class="p">{},</span>
+                                    <span class="s1">&#39;Dev&#39;</span><span class="p">:</span> <span class="p">{},</span>
+                                    <span class="s1">&#39;Test&#39;</span><span class="p">:</span> <span class="p">{}}</span>
+
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">db</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">included_databases</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">dict_all_labels_one_database</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">get_all_labels</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">subset</span> <span class="ow">in</span> <span class="n">dict_all_labels_one_database</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dict_all_labels</span><span class="p">[</span><span class="n">subset</span><span class="p">][</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">dict_all_labels_one_database</span><span class="p">[</span><span class="n">subset</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="AggregateDatabase.get_ground_truth"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.AggregateDatabase.get_ground_truth">[docs]</a>    <span class="k">def</span> <span class="nf">get_ground_truth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">protocol_key</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">protocol_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">protocols</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Protocol [</span><span class="si">{}</span><span class="s1">] not available in AggregateDatabase protocols [</span><span class="si">{}</span><span class="s1">]&#39;</span>
+                             <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">protocol_key</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">protocols</span><span class="p">)))</span>
+        <span class="n">gt_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">dict_all_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_all_labels</span><span class="p">()</span>
+
+        <span class="n">protocol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">protocols</span><span class="p">[</span><span class="n">protocol_key</span><span class="p">]</span>
+        <span class="n">filtered_labels</span> <span class="o">=</span> <span class="n">filter_labels_by_protocol</span><span class="p">(</span><span class="n">protocol</span><span class="p">,</span> <span class="n">dict_all_labels</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">subset</span> <span class="ow">in</span> <span class="n">filtered_labels</span><span class="p">:</span>
+            <span class="n">gt_dict</span><span class="p">[</span><span class="n">subset</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">basename</span> <span class="ow">in</span> <span class="n">filtered_labels</span><span class="p">[</span><span class="n">subset</span><span class="p">]:</span>
+                <span class="n">gt_dict</span><span class="p">[</span><span class="n">subset</span><span class="p">][</span><span class="n">basename</span><span class="p">]</span> <span class="o">=</span> <span class="n">filtered_labels</span><span class="p">[</span><span class="n">subset</span><span class="p">][</span><span class="n">basename</span><span class="p">][</span><span class="s2">&quot;common_pai&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">gt_dict</span></div>
+
+<div class="viewcode-block" id="AggregateDatabase.get_ground_truth_list"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.AggregateDatabase.get_ground_truth_list">[docs]</a>    <span class="k">def</span> <span class="nf">get_ground_truth_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">protocol_key</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">protocol_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">protocols</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Protocol [</span><span class="si">{}</span><span class="s1">] not available in AggregateDatabase protocols [</span><span class="si">{}</span><span class="s1">]&#39;</span>
+                             <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">protocol_key</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">protocols</span><span class="p">)))</span>
+        <span class="n">gt_dict_list</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">dict_all_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_all_labels</span><span class="p">()</span>
+
+        <span class="n">protocol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">protocols</span><span class="p">[</span><span class="n">protocol_key</span><span class="p">]</span>
+        <span class="n">filtered_labels</span> <span class="o">=</span> <span class="n">filter_labels_by_protocol</span><span class="p">(</span><span class="n">protocol</span><span class="p">,</span> <span class="n">dict_all_labels</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">find_database_name_placeholder</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">subset</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Train&#39;</span><span class="p">,</span> <span class="s1">&#39;Dev&#39;</span><span class="p">,</span> <span class="s1">&#39;Test&#39;</span><span class="p">]:</span>
+                <span class="k">for</span> <span class="n">database_name</span><span class="p">,</span> <span class="n">items</span> <span class="ow">in</span> <span class="n">d</span><span class="p">[</span><span class="n">subset</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">items</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                        <span class="k">return</span> <span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="n">database_name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;-PLACEHOLDER}&#39;</span>
+
+        <span class="k">for</span> <span class="n">subset</span> <span class="ow">in</span> <span class="n">filtered_labels</span><span class="p">:</span>
+            <span class="n">gt_dict_list</span><span class="p">[</span><span class="n">subset</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">basename</span> <span class="ow">in</span> <span class="n">filtered_labels</span><span class="p">[</span><span class="n">subset</span><span class="p">]:</span>
+                <span class="n">database_placeholder</span> <span class="o">=</span> <span class="n">find_database_name_placeholder</span><span class="p">(</span><span class="n">dict_all_labels</span><span class="p">,</span> <span class="n">basename</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">database_placeholder</span> <span class="o">==</span> <span class="s1">&#39;{CASIA-SURF-PLACEHOLDER}&#39;</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                <span class="n">complete_path_access</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">database_placeholder</span><span class="p">,</span> <span class="n">basename</span><span class="p">)</span>
+                <span class="n">gt_dict_list</span><span class="p">[</span><span class="n">subset</span><span class="p">][</span><span class="n">complete_path_access</span><span class="p">]</span> <span class="o">=</span> <span class="n">filtered_labels</span><span class="p">[</span><span class="n">subset</span><span class="p">][</span><span class="n">basename</span><span class="p">][</span>
+                    <span class="s2">&quot;common_pai&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">gt_dict_list</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Gradiant
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../../" src="../../../../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../../../../_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../../../../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

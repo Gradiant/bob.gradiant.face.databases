@@ -1,0 +1,445 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>bob.gradiant.face.databases.classes.oulu_npu.oulu_npu_database &mdash; bob.gradiant.face.databases 2.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../../../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../../search.html" /> 
+
+  
+  <script src="../../../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../../../index.html" class="icon icon-home"> bob.gradiant.face.databases
+          
+
+          
+            
+            <img src="../../../../../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../py_api.html">Python API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../../index.html">bob.gradiant.face.databases</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>bob.gradiant.face.databases.classes.oulu_npu.oulu_npu_database</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for bob.gradiant.face.databases.classes.oulu_npu.oulu_npu_database</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># Gradiant&#39;s Biometrics Team &lt;biometrics.support@gradiant.org&gt;</span>
+<span class="c1"># Copyright (C) 2019+ Gradiant, Vigo, Spain</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.test.test_resources</span> <span class="k">import</span> <span class="n">TestResources</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.core</span> <span class="k">import</span> <span class="n">Database</span><span class="p">,</span> <span class="n">AccessModifier</span><span class="p">,</span> <span class="n">VideoAccess</span><span class="p">,</span> <span class="n">TypeDatabase</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes</span> <span class="k">import</span> <span class="n">inter_database_categorisation</span> <span class="k">as</span> <span class="n">inter_db_cat</span>
+
+
+<span class="n">OULU_PROTOCOLS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;grandtest&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Protocol_1&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Protocol_2&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Protocol_3_1&#39;</span><span class="p">,</span> <span class="s1">&#39;Protocol_3_2&#39;</span><span class="p">,</span> <span class="s1">&#39;Protocol_3_3&#39;</span><span class="p">,</span> <span class="s1">&#39;Protocol_3_4&#39;</span><span class="p">,</span> <span class="s1">&#39;Protocol_3_5&#39;</span><span class="p">,</span> <span class="s1">&#39;Protocol_3_6&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Protocol_4_1&#39;</span><span class="p">,</span> <span class="s1">&#39;Protocol_4_2&#39;</span><span class="p">,</span> <span class="s1">&#39;Protocol_4_3&#39;</span><span class="p">,</span> <span class="s1">&#39;Protocol_4_4&#39;</span><span class="p">,</span> <span class="s1">&#39;Protocol_4_5&#39;</span><span class="p">,</span> <span class="s1">&#39;Protocol_4_6&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;Protocol_4_no_loco&#39;</span><span class="p">]</span>
+
+<span class="n">OULU_SUBSETS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Train&#39;</span><span class="p">,</span> <span class="s1">&#39;Dev&#39;</span><span class="p">,</span> <span class="s1">&#39;Test&#39;</span><span class="p">]</span>
+<span class="n">OULU_FOLDERS_VIDEO</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Train_files&#39;</span><span class="p">,</span> <span class="s1">&#39;Dev_files&#39;</span><span class="p">,</span> <span class="s1">&#39;Test_files&#39;</span><span class="p">]</span>
+<span class="n">OULU_FOLDERS_CORRESPONDENCE</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Train_files&#39;</span><span class="p">:</span> <span class="s1">&#39;Train&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;Dev_files&#39;</span><span class="p">:</span> <span class="s1">&#39;Dev&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;Test_files&#39;</span><span class="p">:</span> <span class="s1">&#39;Test&#39;</span><span class="p">}</span>
+<span class="n">OULU_FOLDERS_REVERSE_CORRESPONDENCE</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Train&#39;</span><span class="p">:</span> <span class="s1">&#39;Train_files&#39;</span><span class="p">,</span>
+                                       <span class="s1">&#39;Dev&#39;</span><span class="p">:</span> <span class="s1">&#39;Dev_files&#39;</span><span class="p">,</span>
+                                       <span class="s1">&#39;Test&#39;</span><span class="p">:</span> <span class="s1">&#39;Test_files&#39;</span><span class="p">}</span>
+<span class="n">OULU_VIDEO_EXTENSION</span> <span class="o">=</span> <span class="s1">&#39;.avi&#39;</span>
+
+<span class="n">OULU_NPU_FROM_TEXT_CONVENTION</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;+1&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                                 <span class="s1">&#39;-1&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                                 <span class="s1">&#39;-2&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="n">OULU_PAIS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;real&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+             <span class="s1">&#39;print&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>   <span class="c1"># Canon imagePRESS C6011 (1200x1200 dpi) &amp; Canon PIXMA iX655 (9600x2400 dpi)</span>
+             <span class="s1">&#39;replay&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>  <span class="c1"># MacBook Retina (13&quot;, 2560x1600) &amp; Dell 1905FP (19&quot;, 1280x1024)</span>
+
+<span class="n">OULU_PAI_CORRESPONDENCES</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;1&#39;</span><span class="p">:</span> <span class="n">OULU_PAIS</span><span class="p">[</span><span class="s1">&#39;real&#39;</span><span class="p">],</span>
+                            <span class="s1">&#39;2&#39;</span><span class="p">:</span> <span class="n">OULU_PAIS</span><span class="p">[</span><span class="s1">&#39;print&#39;</span><span class="p">],</span>    <span class="c1"># Canon imagePRESS C6011 (1200x1200 dpi)</span>
+                            <span class="s1">&#39;3&#39;</span><span class="p">:</span> <span class="n">OULU_PAIS</span><span class="p">[</span><span class="s1">&#39;print&#39;</span><span class="p">],</span>    <span class="c1"># Canon PIXMA iX655 (9600x2400 dpi)</span>
+                            <span class="s1">&#39;4&#39;</span><span class="p">:</span> <span class="n">OULU_PAIS</span><span class="p">[</span><span class="s1">&#39;replay&#39;</span><span class="p">],</span>   <span class="c1"># MacBook Retina (13&quot;, 2560x1600)</span>
+                            <span class="s1">&#39;5&#39;</span><span class="p">:</span> <span class="n">OULU_PAIS</span><span class="p">[</span><span class="s1">&#39;replay&#39;</span><span class="p">]}</span>   <span class="c1"># Dell 1905FP (19&quot;, 1280x1024)</span>
+
+<span class="n">OULU_COMMON_PAIS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;1&#39;</span><span class="p">:</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_PAI_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;real&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;2&#39;</span><span class="p">:</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_PAI_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;print&#39;</span><span class="p">][</span><span class="s1">&#39;high_quality&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;3&#39;</span><span class="p">:</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_PAI_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;print&#39;</span><span class="p">][</span><span class="s1">&#39;high_quality&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;4&#39;</span><span class="p">:</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_PAI_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;replay&#39;</span><span class="p">][</span><span class="s1">&#39;medium_quality&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;5&#39;</span><span class="p">:</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_PAI_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;replay&#39;</span><span class="p">][</span><span class="s1">&#39;high_quality&#39;</span><span class="p">]}</span>
+
+<span class="n">OULU_CAPTURE_DEVICES</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;samsung_galaxy_s6_edge&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                        <span class="s1">&#39;htc_desire_eye&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                        <span class="s1">&#39;meizu_x5&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                        <span class="s1">&#39;asus_xenfone&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+                        <span class="s1">&#39;sony_xperia_c5&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+                        <span class="s1">&#39;oppo_n3&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
+
+<span class="n">OULU_CAPTURE_DEVICE_CORRESPONDENCES</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;1&#39;</span><span class="p">:</span> <span class="n">OULU_CAPTURE_DEVICES</span><span class="p">[</span><span class="s1">&#39;samsung_galaxy_s6_edge&#39;</span><span class="p">],</span>
+                                       <span class="s1">&#39;2&#39;</span><span class="p">:</span> <span class="n">OULU_CAPTURE_DEVICES</span><span class="p">[</span><span class="s1">&#39;htc_desire_eye&#39;</span><span class="p">],</span>
+                                       <span class="s1">&#39;3&#39;</span><span class="p">:</span> <span class="n">OULU_CAPTURE_DEVICES</span><span class="p">[</span><span class="s1">&#39;meizu_x5&#39;</span><span class="p">],</span>
+                                       <span class="s1">&#39;4&#39;</span><span class="p">:</span> <span class="n">OULU_CAPTURE_DEVICES</span><span class="p">[</span><span class="s1">&#39;asus_xenfone&#39;</span><span class="p">],</span>
+                                       <span class="s1">&#39;5&#39;</span><span class="p">:</span> <span class="n">OULU_CAPTURE_DEVICES</span><span class="p">[</span><span class="s1">&#39;sony_xperia_c5&#39;</span><span class="p">],</span>
+                                       <span class="s1">&#39;6&#39;</span><span class="p">:</span> <span class="n">OULU_CAPTURE_DEVICES</span><span class="p">[</span><span class="s1">&#39;oppo_n3&#39;</span><span class="p">]}</span>
+
+<span class="n">OULU_COMMON_CAPTURE_DEVICES</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;1&#39;</span><span class="p">:</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_CAPTURE_DEVICE_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;mobile&#39;</span><span class="p">][</span><span class="s1">&#39;low_quality&#39;</span><span class="p">],</span>
+                               <span class="s1">&#39;2&#39;</span><span class="p">:</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_CAPTURE_DEVICE_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;mobile&#39;</span><span class="p">][</span><span class="s1">&#39;high_quality&#39;</span><span class="p">],</span>
+                               <span class="s1">&#39;3&#39;</span><span class="p">:</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_CAPTURE_DEVICE_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;mobile&#39;</span><span class="p">][</span><span class="s1">&#39;low_quality&#39;</span><span class="p">],</span>
+                               <span class="s1">&#39;4&#39;</span><span class="p">:</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_CAPTURE_DEVICE_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;mobile&#39;</span><span class="p">][</span><span class="s1">&#39;high_quality&#39;</span><span class="p">],</span>
+                               <span class="s1">&#39;5&#39;</span><span class="p">:</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_CAPTURE_DEVICE_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;mobile&#39;</span><span class="p">][</span><span class="s1">&#39;high_quality&#39;</span><span class="p">],</span>
+                               <span class="s1">&#39;6&#39;</span><span class="p">:</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_CAPTURE_DEVICE_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;mobile&#39;</span><span class="p">][</span><span class="s1">&#39;high_quality&#39;</span><span class="p">]}</span>
+
+<span class="n">OULU_COMMON_LIGHTNING</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;1&#39;</span><span class="p">:</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_LIGHTNING_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;adverse&#39;</span><span class="p">],</span>    <span class="c1"># session 1</span>
+                         <span class="s1">&#39;2&#39;</span><span class="p">:</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_LIGHTNING_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;controlled&#39;</span><span class="p">],</span> <span class="c1"># session 2</span>
+                         <span class="s1">&#39;3&#39;</span><span class="p">:</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_LIGHTNING_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;adverse&#39;</span><span class="p">]}</span>    <span class="c1"># session 3</span>
+
+
+<div class="viewcode-block" id="OuluNpuDatabase"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.OuluNpuDatabase">[docs]</a><span class="k">class</span> <span class="nc">OuluNpuDatabase</span><span class="p">(</span><span class="n">Database</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_path</span><span class="p">,</span> <span class="n">annotation_base_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_path</span> <span class="o">=</span> <span class="n">base_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dict_all_labels</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">OuluNpuDatabase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">base_path</span><span class="p">,</span> <span class="n">type_database</span><span class="o">=</span><span class="n">TypeDatabase</span><span class="o">.</span><span class="n">ALL_FILES_TOGETHER</span><span class="p">,</span>
+                                              <span class="n">annotation_base_path</span><span class="o">=</span><span class="n">annotation_base_path</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">OuluNpuDatabase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__str__</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+
+<div class="viewcode-block" id="OuluNpuDatabase.name"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.OuluNpuDatabase.name">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">():</span>
+        <span class="k">return</span> <span class="s1">&#39;oulu-npu&#39;</span></div>
+
+<div class="viewcode-block" id="OuluNpuDatabase.is_a_collection_of_databases"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.OuluNpuDatabase.is_a_collection_of_databases">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">is_a_collection_of_databases</span><span class="p">():</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="OuluNpuDatabase.info"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.OuluNpuDatabase.info">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">info</span><span class="p">():</span>
+        <span class="n">dict_info</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;users&#39;</span><span class="p">:</span> <span class="mi">55</span><span class="p">,</span>
+                     <span class="s1">&#39;Train videos&#39;</span><span class="p">:</span> <span class="mi">1800</span><span class="p">,</span>
+                     <span class="s1">&#39;Dev videos&#39;</span><span class="p">:</span> <span class="mi">1350</span><span class="p">,</span>
+                     <span class="s1">&#39;Test videos&#39;</span><span class="p">:</span> <span class="mi">1800</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">dict_info</span></div>
+
+<div class="viewcode-block" id="OuluNpuDatabase.get_protocols"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.OuluNpuDatabase.get_protocols">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_protocols</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">OULU_PROTOCOLS</span></div>
+
+<div class="viewcode-block" id="OuluNpuDatabase.get_subsets"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.OuluNpuDatabase.get_subsets">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_subsets</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">OULU_SUBSETS</span></div>
+
+<div class="viewcode-block" id="OuluNpuDatabase.get_capture_devices"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.OuluNpuDatabase.get_capture_devices">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_capture_devices</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">OULU_CAPTURE_DEVICES</span></div>
+
+<div class="viewcode-block" id="OuluNpuDatabase.get_attack_dict"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.OuluNpuDatabase.get_attack_dict">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_attack_dict</span><span class="p">():</span>
+        <span class="n">attack_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">OULU_PAIS</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="mi">0</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">attack_dict</span></div>
+
+<div class="viewcode-block" id="OuluNpuDatabase.get_all_accesses"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.OuluNpuDatabase.get_all_accesses">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_accesses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">access_modifier</span><span class="o">=</span><span class="n">AccessModifier</span><span class="p">()):</span>
+        <span class="n">dict_all_accesses</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">list_accesses</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">folders_correspondence</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Train_files&#39;</span><span class="p">:</span> <span class="s1">&#39;Train&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;Dev_files&#39;</span><span class="p">:</span> <span class="s1">&#39;Dev&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;Test_files&#39;</span><span class="p">:</span> <span class="s1">&#39;Test&#39;</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">folder</span> <span class="ow">in</span> <span class="n">OULU_FOLDERS_VIDEO</span><span class="p">:</span>
+            <span class="n">folder_set</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_path</span><span class="p">,</span> <span class="n">folder</span><span class="p">)</span>
+            <span class="n">list_basename_access</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_list_basename_access_from_folder</span><span class="p">(</span><span class="n">folder_set</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">basename</span> <span class="ow">in</span> <span class="n">list_basename_access</span><span class="p">:</span>
+                <span class="n">list_accesses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">VideoAccess</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_path</span><span class="p">,</span>
+                                                 <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">basename</span><span class="p">),</span>
+                                                 <span class="n">OULU_VIDEO_EXTENSION</span><span class="p">,</span>
+                                                 <span class="n">access_modifier</span><span class="o">=</span><span class="n">access_modifier</span><span class="p">,</span>
+                                                 <span class="n">annotation_base_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">annotation_base_path</span><span class="p">,</span>
+                                                 <span class="n">database_name</span><span class="o">=</span><span class="n">OuluNpuDatabase</span><span class="o">.</span><span class="n">name</span><span class="p">()))</span>
+            <span class="n">list_accesses</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">dict_all_accesses</span><span class="p">[</span><span class="n">folders_correspondence</span><span class="p">[</span><span class="n">folder</span><span class="p">]]</span> <span class="o">=</span> <span class="n">list_accesses</span>
+            <span class="n">list_accesses</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">return</span> <span class="n">dict_all_accesses</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">__get_list_basename_access_from_folder</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
+        <span class="n">list_basename_video</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">OULU_VIDEO_EXTENSION</span><span class="p">):</span>
+                <span class="n">basename</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">list_basename_video</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">basename</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">list_basename_video</span>
+
+<div class="viewcode-block" id="OuluNpuDatabase.get_all_labels"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.OuluNpuDatabase.get_all_labels">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">dict_all_labels</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">dict_all_labels_aggregate_db</span> <span class="o">=</span> <span class="n">TestResources</span><span class="o">.</span><span class="n">get_aggregated_database_all_dict_labels</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">subset</span> <span class="ow">in</span> <span class="n">dict_all_labels_aggregate_db</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dict_all_labels</span><span class="p">[</span><span class="n">subset</span><span class="p">]</span> <span class="o">=</span> <span class="n">dict_all_labels_aggregate_db</span><span class="p">[</span><span class="n">subset</span><span class="p">][</span><span class="n">OuluNpuDatabase</span><span class="o">.</span><span class="n">name</span><span class="p">()]</span>
+
+            <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;WARNING (OuluNpuDatabase.get_all_labels): Labels resource file &quot;</span>
+                              <span class="s2">&quot;[resources/aggregate_database_all_labels.pickle] not found. &quot;</span>
+                              <span class="s2">&quot;Extracting all labels from scratch may take a while.&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dict_all_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_all_labels_from_scratch</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dict_all_labels</span></div>
+
+    <span class="k">def</span> <span class="nf">_extract_all_labels_from_scratch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dict_all_labels</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Train&#39;</span><span class="p">:</span> <span class="p">{},</span>
+                           <span class="s1">&#39;Dev&#39;</span><span class="p">:</span> <span class="p">{},</span>
+                           <span class="s1">&#39;Test&#39;</span><span class="p">:</span> <span class="p">{}}</span>
+
+        <span class="k">for</span> <span class="n">subset</span> <span class="ow">in</span> <span class="n">dict_all_labels</span><span class="p">:</span>
+            <span class="n">folder_set</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_path</span><span class="p">,</span> <span class="n">subset</span> <span class="o">+</span> <span class="s1">&#39;_files&#39;</span><span class="p">)</span>
+            <span class="n">list_basename_access</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_list_basename_access_from_folder</span><span class="p">(</span><span class="n">folder_set</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">basename</span> <span class="ow">in</span> <span class="n">list_basename_access</span><span class="p">:</span>
+                <span class="n">dict_all_labels</span><span class="p">[</span><span class="n">subset</span><span class="p">][</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">OULU_FOLDERS_REVERSE_CORRESPONDENCE</span><span class="p">[</span><span class="n">subset</span><span class="p">],</span> <span class="n">basename</span><span class="p">)]</span> <span class="o">=</span> \
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__get_labels_from_basename</span><span class="p">(</span><span class="n">folder_set</span><span class="p">,</span> <span class="n">basename</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">dict_all_labels</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">__get_labels_from_basename</span><span class="p">(</span><span class="n">folder_set</span><span class="p">,</span> <span class="n">basename</span><span class="p">):</span>
+        <span class="n">split_labels</span> <span class="o">=</span> <span class="n">basename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+        <span class="n">labels_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;capture_device&#39;</span><span class="p">:</span> <span class="n">OULU_CAPTURE_DEVICE_CORRESPONDENCES</span><span class="p">[</span><span class="n">split_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+                       <span class="s1">&#39;common_capture_device&#39;</span><span class="p">:</span> <span class="n">OULU_COMMON_CAPTURE_DEVICES</span><span class="p">[</span><span class="n">split_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+                       <span class="s1">&#39;common_lightning&#39;</span><span class="p">:</span> <span class="n">OULU_COMMON_LIGHTNING</span><span class="p">[</span><span class="n">split_labels</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+                       <span class="s1">&#39;common_face_resolution&#39;</span><span class="p">:</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">get_common_face_resolution</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder_set</span><span class="p">,</span> <span class="n">basename</span><span class="p">)),</span>
+                       <span class="s1">&#39;pai&#39;</span><span class="p">:</span> <span class="n">OULU_PAI_CORRESPONDENCES</span><span class="p">[</span><span class="n">split_labels</span><span class="p">[</span><span class="mi">3</span><span class="p">]],</span>
+                       <span class="s1">&#39;common_pai&#39;</span><span class="p">:</span> <span class="n">OULU_COMMON_PAIS</span><span class="p">[</span><span class="n">split_labels</span><span class="p">[</span><span class="mi">3</span><span class="p">]],</span>
+                       <span class="s1">&#39;scenario&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">split_labels</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+                       <span class="s1">&#39;session&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">split_labels</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+                       <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">split_labels</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">labels_dict</span>
+
+<div class="viewcode-block" id="OuluNpuDatabase.get_ground_truth"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.OuluNpuDatabase.get_ground_truth">[docs]</a>    <span class="k">def</span> <span class="nf">get_ground_truth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">protocol</span><span class="p">):</span>
+        <span class="n">gt_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="n">protocol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">OULU_PROTOCOLS</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Protocol [</span><span class="si">{}</span><span class="s1">] not available in OULU_NPU protocols [</span><span class="si">{}</span><span class="s1">]&#39;</span><span class="o">.</span> <span class="nb">format</span><span class="p">(</span><span class="n">protocol</span><span class="p">,</span> <span class="n">OULU_PROTOCOLS</span><span class="p">))</span>
+
+        <span class="n">dict_all_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_all_labels</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">subset</span> <span class="ow">in</span> <span class="n">dict_all_labels</span><span class="p">:</span>
+            <span class="n">gt_dict</span><span class="p">[</span><span class="n">subset</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">protocol_subset_basenames</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="k">if</span> <span class="n">protocol</span> <span class="o">==</span> <span class="s1">&#39;grandtest&#39;</span><span class="p">:</span>
+                <span class="n">folder_set</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_path</span><span class="p">,</span> <span class="n">subset</span> <span class="o">+</span> <span class="s1">&#39;_files&#39;</span><span class="p">)</span>
+                <span class="n">protocol_subset_basenames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_list_basename_access_from_folder</span><span class="p">(</span><span class="n">folder_set</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">protocol_files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_protocol_files_from_protocol_and_subset</span><span class="p">(</span><span class="n">subset</span><span class="p">,</span> <span class="n">protocol</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">protocol_file</span> <span class="ow">in</span> <span class="n">protocol_files</span><span class="p">:</span>
+                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">protocol_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">infile</span><span class="p">:</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                        <span class="n">list_lines</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+
+                    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">list_lines</span><span class="p">:</span>
+                        <span class="n">split_values</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+                        <span class="n">basename</span> <span class="o">=</span> <span class="n">split_values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="n">protocol_subset_basenames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">basename</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">basename</span> <span class="ow">in</span> <span class="n">protocol_subset_basenames</span><span class="p">:</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">OULU_FOLDERS_REVERSE_CORRESPONDENCE</span><span class="p">[</span><span class="n">subset</span><span class="p">],</span> <span class="n">basename</span><span class="p">)</span>
+                <span class="n">gt_dict</span><span class="p">[</span><span class="n">subset</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">dict_all_labels</span><span class="p">[</span><span class="n">subset</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;pai&#39;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">gt_dict</span></div>
+
+    <span class="k">def</span> <span class="nf">__get_protocol_files_from_protocol_and_subset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subset</span><span class="p">,</span> <span class="n">protocol</span><span class="p">):</span>
+        <span class="n">protocol_files</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">if</span> <span class="n">protocol</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Protocol_1&#39;</span><span class="p">,</span> <span class="s1">&#39;Protocol_2&#39;</span><span class="p">]:</span>
+            <span class="n">protocol_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_path</span><span class="p">,</span> <span class="s1">&#39;Protocols&#39;</span><span class="p">,</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">subset</span> <span class="o">+</span> <span class="s1">&#39;_2.txt&#39;</span><span class="p">))</span>
+
+        <span class="k">elif</span> <span class="n">protocol</span> <span class="o">==</span> <span class="s1">&#39;Protocol_4_no_loco&#39;</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+                <span class="n">protocol_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_path</span><span class="p">,</span> <span class="s1">&#39;Protocols&#39;</span><span class="p">,</span> <span class="s1">&#39;Protocol_4&#39;</span><span class="p">,</span>
+                                                   <span class="n">subset</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.txt&#39;</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">split_protocol</span> <span class="o">=</span> <span class="n">protocol</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">protocol</span> <span class="o">=</span> <span class="n">split_protocol</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">split_protocol</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">protocol_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_path</span><span class="p">,</span> <span class="s1">&#39;Protocols&#39;</span><span class="p">,</span> <span class="n">protocol</span><span class="p">,</span> <span class="n">subset</span> <span class="o">+</span> <span class="s1">&#39;_2_&#39;</span> <span class="o">+</span> <span class="n">user</span> <span class="o">+</span> <span class="s1">&#39;.txt&#39;</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">protocol_files</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Gradiant
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../../" src="../../../../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../../../../_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../../../../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

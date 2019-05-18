@@ -1,0 +1,458 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>bob.gradiant.face.databases.classes.siw.siw_database &mdash; bob.gradiant.face.databases 2.0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../../../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../../search.html" /> 
+
+  
+  <script src="../../../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../../../index.html" class="icon icon-home"> bob.gradiant.face.databases
+          
+
+          
+            
+            <img src="../../../../../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../py_api.html">Python API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../../index.html">bob.gradiant.face.databases</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>bob.gradiant.face.databases.classes.siw.siw_database</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for bob.gradiant.face.databases.classes.siw.siw_database</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># Gradiant&#39;s Biometrics Team &lt;biometrics.support@gradiant.org&gt;</span>
+<span class="c1"># Copyright (C) 2019+ Gradiant, Vigo, Spain</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.core</span> <span class="k">import</span> <span class="n">Database</span><span class="p">,</span> <span class="n">AccessModifier</span><span class="p">,</span> <span class="n">VideoAccess</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.test.test_resources</span> <span class="k">import</span> <span class="n">TestResources</span>
+<span class="kn">from</span> <span class="nn">bob.gradiant.face.databases.classes</span> <span class="k">import</span> <span class="n">inter_database_categorisation</span> <span class="k">as</span> <span class="n">inter_db_cat</span>
+
+<span class="n">SIW_PROTOCOLS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;protocol_1&#39;</span><span class="p">]</span>
+<span class="n">SIW_SUBSETS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Train&#39;</span><span class="p">,</span> <span class="s1">&#39;Dev&#39;</span><span class="p">,</span> <span class="s1">&#39;Test&#39;</span><span class="p">]</span>
+<span class="n">SIW_PAIS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;real&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s1">&#39;print&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s1">&#39;replay&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+
+<span class="n">SIW_PAI_CORRESPONDENCE</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;1&#39;</span><span class="p">:</span> <span class="n">SIW_PAIS</span><span class="p">[</span><span class="s1">&#39;real&#39;</span><span class="p">],</span>
+                          <span class="s1">&#39;2&#39;</span><span class="p">:</span> <span class="n">SIW_PAIS</span><span class="p">[</span><span class="s1">&#39;print&#39;</span><span class="p">],</span>
+                          <span class="s1">&#39;3&#39;</span><span class="p">:</span> <span class="n">SIW_PAIS</span><span class="p">[</span><span class="s1">&#39;replay&#39;</span><span class="p">]}</span>
+
+<span class="n">SIW_CAPTURE_DEVICES</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;canon_eos_t6&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                       <span class="s1">&#39;logitech_c920_webcam&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+
+<span class="n">SIW_COMMON_CAPTURE_DEVICES</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;1&#39;</span><span class="p">:</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_CAPTURE_DEVICE_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;digital_camera&#39;</span><span class="p">][</span><span class="s1">&#39;high_quality&#39;</span><span class="p">],</span>
+                              <span class="s1">&#39;2&#39;</span><span class="p">:</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_CAPTURE_DEVICE_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;webcam&#39;</span><span class="p">][</span><span class="s1">&#39;high_quality&#39;</span><span class="p">]}</span>
+
+<span class="n">SIW_CAPTURE_DEVICE_CORRESPONDENCE</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;1&#39;</span><span class="p">:</span> <span class="n">SIW_CAPTURE_DEVICES</span><span class="p">[</span><span class="s1">&#39;canon_eos_t6&#39;</span><span class="p">],</span>
+                                     <span class="s1">&#39;2&#39;</span><span class="p">:</span> <span class="n">SIW_CAPTURE_DEVICES</span><span class="p">[</span><span class="s1">&#39;logitech_c920_webcam&#39;</span><span class="p">]}</span>
+
+<span class="n">SIW_USERS_PER_SUBSET</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Train&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">166</span><span class="p">),</span>
+                        <span class="s1">&#39;Dev&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">150</span><span class="p">,</span> <span class="mi">151</span><span class="p">,</span> <span class="mi">152</span><span class="p">,</span> <span class="mi">155</span><span class="p">,</span> <span class="mi">156</span><span class="p">,</span> <span class="mi">157</span><span class="p">,</span> <span class="mi">159</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="mi">162</span><span class="p">,</span> <span class="mi">163</span><span class="p">,</span> <span class="mi">164</span><span class="p">,</span> <span class="mi">165</span><span class="p">],</span>
+                        <span class="s1">&#39;Test&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">166</span><span class="p">)}</span>
+
+
+<div class="viewcode-block" id="SiwDatabase"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.SiwDatabase">[docs]</a><span class="k">class</span> <span class="nc">SiwDatabase</span><span class="p">(</span><span class="n">Database</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_path</span><span class="p">,</span> <span class="n">annotation_base_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dict_all_accesses</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dict_all_labels</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SiwDatabase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">base_path</span><span class="p">,</span> <span class="n">annotation_base_path</span><span class="o">=</span><span class="n">annotation_base_path</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">SiwDatabase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__str__</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SiwDatabase.name"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.SiwDatabase.name">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">():</span>
+        <span class="k">return</span> <span class="s1">&#39;siw&#39;</span></div>
+
+<div class="viewcode-block" id="SiwDatabase.is_a_collection_of_databases"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.SiwDatabase.is_a_collection_of_databases">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">is_a_collection_of_databases</span><span class="p">():</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="SiwDatabase.info"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.SiwDatabase.info">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">info</span><span class="p">():</span>
+        <span class="n">dict_info</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;users&#39;</span><span class="p">:</span> <span class="mi">165</span><span class="p">,</span>
+                     <span class="s1">&#39;Train videos&#39;</span><span class="p">:</span> <span class="mi">2145</span><span class="p">,</span>
+                     <span class="s1">&#39;Dev videos&#39;</span><span class="p">:</span> <span class="mi">272</span><span class="p">,</span>
+                     <span class="s1">&#39;Test videos&#39;</span><span class="p">:</span> <span class="mi">2061</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">dict_info</span></div>
+
+<div class="viewcode-block" id="SiwDatabase.get_protocols"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.SiwDatabase.get_protocols">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_protocols</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">SIW_PROTOCOLS</span></div>
+
+<div class="viewcode-block" id="SiwDatabase.get_subsets"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.SiwDatabase.get_subsets">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_subsets</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">SIW_SUBSETS</span></div>
+
+<div class="viewcode-block" id="SiwDatabase.get_capture_devices"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.SiwDatabase.get_capture_devices">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_capture_devices</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">SIW_CAPTURE_DEVICES</span></div>
+
+<div class="viewcode-block" id="SiwDatabase.get_attack_dict"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.SiwDatabase.get_attack_dict">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_attack_dict</span><span class="p">():</span>
+        <span class="n">attack_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">SIW_PAIS</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="mi">0</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">attack_dict</span></div>
+
+<div class="viewcode-block" id="SiwDatabase.get_all_accesses"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.SiwDatabase.get_all_accesses">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_accesses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">access_modifier</span><span class="o">=</span><span class="n">AccessModifier</span><span class="p">()):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">dict_all_accesses</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dict_all_accesses</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Train&#39;</span><span class="p">:</span> <span class="p">[],</span>
+                                      <span class="s1">&#39;Dev&#39;</span><span class="p">:</span> <span class="p">[],</span>
+                                      <span class="s1">&#39;Test&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+
+            <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_path</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">dirs</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s1">&#39;.mov&#39;</span><span class="p">,</span> <span class="s1">&#39;.mp4&#39;</span><span class="p">)):</span>
+                            <span class="n">basename</span><span class="p">,</span> <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                            <span class="n">split_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">root</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span><span class="p">)</span>
+                            <span class="n">relative_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="o">*</span><span class="n">split_path</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:])</span>
+                            <span class="n">subject</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">basename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+                            <span class="n">original_subset</span> <span class="o">=</span> <span class="n">split_path</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+
+                            <span class="k">if</span> <span class="n">original_subset</span> <span class="o">==</span> <span class="s1">&#39;Train&#39;</span> <span class="ow">and</span> <span class="n">subject</span> <span class="ow">in</span> <span class="n">SIW_USERS_PER_SUBSET</span><span class="p">[</span><span class="s1">&#39;Dev&#39;</span><span class="p">]:</span>
+                                <span class="n">subset</span> <span class="o">=</span> <span class="s1">&#39;Dev&#39;</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">subset</span> <span class="o">=</span> <span class="n">original_subset</span>
+
+                            <span class="bp">self</span><span class="o">.</span><span class="n">dict_all_accesses</span><span class="p">[</span><span class="n">subset</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                                <span class="n">VideoAccess</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_path</span><span class="p">,</span>
+                                            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">relative_path</span><span class="p">,</span> <span class="n">basename</span><span class="p">),</span>
+                                            <span class="n">extension</span><span class="p">,</span>
+                                            <span class="n">access_modifier</span><span class="o">=</span><span class="n">access_modifier</span><span class="p">,</span>
+                                            <span class="n">annotation_base_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">annotation_base_path</span><span class="p">,</span>
+                                            <span class="n">database_name</span><span class="o">=</span><span class="n">SiwDatabase</span><span class="o">.</span><span class="n">name</span><span class="p">()))</span>
+
+            <span class="k">for</span> <span class="n">subset</span><span class="p">,</span> <span class="n">list_accesses</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dict_all_accesses</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">list_accesses</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dict_all_accesses</span></div>
+
+<div class="viewcode-block" id="SiwDatabase.get_all_labels"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.SiwDatabase.get_all_labels">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">dict_all_labels</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">dict_all_labels_aggregate_db</span> <span class="o">=</span> <span class="n">TestResources</span><span class="o">.</span><span class="n">get_aggregated_database_all_dict_labels</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">subset</span> <span class="ow">in</span> <span class="n">dict_all_labels_aggregate_db</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dict_all_labels</span><span class="p">[</span><span class="n">subset</span><span class="p">]</span> <span class="o">=</span> <span class="n">dict_all_labels_aggregate_db</span><span class="p">[</span><span class="n">subset</span><span class="p">][</span><span class="n">SiwDatabase</span><span class="o">.</span><span class="n">name</span><span class="p">()]</span>
+
+            <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;WARNING (SiwDatabase.get_all_labels): Labels resource file &quot;</span>
+                              <span class="s2">&quot;[resources/aggregate_database_all_labels.pickle] not found. &quot;</span>
+                              <span class="s2">&quot;Extracting all labels from scratch may take a while.&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dict_all_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_all_labels_from_scratch</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dict_all_labels</span></div>
+
+    <span class="k">def</span> <span class="nf">_extract_all_labels_from_scratch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dict_all_labels</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Train&#39;</span><span class="p">:</span> <span class="p">{},</span>
+                           <span class="s1">&#39;Dev&#39;</span><span class="p">:</span> <span class="p">{},</span>
+                           <span class="s1">&#39;Test&#39;</span><span class="p">:</span> <span class="p">{}}</span>
+
+        <span class="n">dict_all_accesses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_all_accesses</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">subset</span><span class="p">,</span> <span class="n">list_accesses</span> <span class="ow">in</span> <span class="n">dict_all_accesses</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">access</span> <span class="ow">in</span> <span class="n">list_accesses</span><span class="p">:</span>
+
+                <span class="n">basename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">access</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="n">subject</span><span class="p">,</span> <span class="n">sensor</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">medium</span><span class="p">,</span> <span class="n">session</span> <span class="o">=</span> <span class="n">basename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+
+                <span class="n">dict_all_labels</span><span class="p">[</span><span class="n">subset</span><span class="p">][</span><span class="n">access</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;pai&#39;</span><span class="p">:</span> <span class="n">SIW_PAI_CORRESPONDENCE</span><span class="p">[</span><span class="nb">type</span><span class="p">],</span>
+                    <span class="s1">&#39;scenario&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_scenario</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">medium</span><span class="p">,</span> <span class="n">session</span><span class="p">),</span>
+                    <span class="s1">&#39;capture_device&#39;</span><span class="p">:</span> <span class="n">SIW_CAPTURE_DEVICE_CORRESPONDENCE</span><span class="p">[</span><span class="n">sensor</span><span class="p">],</span>
+                    <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="s1">&#39;medium&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">medium</span><span class="p">),</span>
+                    <span class="s1">&#39;common_pai&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_common_pai</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">medium</span><span class="p">,</span> <span class="n">session</span><span class="p">),</span>
+                    <span class="s1">&#39;common_capture_device&#39;</span><span class="p">:</span> <span class="n">SIW_COMMON_CAPTURE_DEVICES</span><span class="p">[</span><span class="n">sensor</span><span class="p">],</span>
+                    <span class="s1">&#39;common_lightning&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_common_lightning</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">medium</span><span class="p">),</span>
+                    <span class="s1">&#39;common_face_resolution&#39;</span><span class="p">:</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">get_common_face_resolution</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">access</span><span class="o">.</span><span class="n">base_path</span><span class="p">,</span>
+                                                                                                   <span class="n">access</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+                    <span class="p">}</span>
+        <span class="k">return</span> <span class="n">dict_all_labels</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">__get_common_pai</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">medium</span><span class="p">,</span> <span class="n">session</span><span class="p">):</span>
+        <span class="n">common_pai</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span>    <span class="c1"># real</span>
+            <span class="n">common_pai</span> <span class="o">=</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_PAI_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;real&#39;</span><span class="p">]</span>
+
+        <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;2&#39;</span><span class="p">:</span>  <span class="c1"># print</span>
+            <span class="k">if</span> <span class="n">session</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span>  <span class="c1"># Glossy paper</span>
+                <span class="n">common_pai</span> <span class="o">=</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_PAI_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;print&#39;</span><span class="p">][</span><span class="s1">&#39;high_quality&#39;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">session</span> <span class="o">==</span> <span class="s1">&#39;2&#39;</span><span class="p">:</span>  <span class="c1"># Matt paper</span>
+                <span class="n">common_pai</span> <span class="o">=</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_PAI_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;print&#39;</span><span class="p">][</span><span class="s1">&#39;medium_quality&#39;</span><span class="p">]</span>
+
+        <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;3&#39;</span><span class="p">:</span>  <span class="c1"># replay</span>
+            <span class="k">if</span> <span class="n">medium</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span>    <span class="c1"># iPad Pro (12.9&quot;, 2732x2048)</span>
+                <span class="n">common_pai</span> <span class="o">=</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_PAI_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;replay&#39;</span><span class="p">][</span><span class="s1">&#39;high_quality&#39;</span><span class="p">]</span>
+
+            <span class="k">elif</span> <span class="n">medium</span> <span class="o">==</span> <span class="s1">&#39;2&#39;</span><span class="p">:</span>  <span class="c1"># iPhone7 Plus (5.5&quot;, 1920x1080)</span>
+                <span class="n">common_pai</span> <span class="o">=</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_PAI_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;replay&#39;</span><span class="p">][</span><span class="s1">&#39;high_quality&#39;</span><span class="p">]</span>
+
+            <span class="k">elif</span> <span class="n">medium</span> <span class="o">==</span> <span class="s1">&#39;3&#39;</span><span class="p">:</span>  <span class="c1"># Samsung Galaxy S8 (5.8&quot;, 2960x144)</span>
+                <span class="n">common_pai</span> <span class="o">=</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_PAI_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;replay&#39;</span><span class="p">][</span><span class="s1">&#39;high_quality&#39;</span><span class="p">]</span>
+
+            <span class="k">elif</span> <span class="n">medium</span> <span class="o">==</span> <span class="s1">&#39;4&#39;</span><span class="p">:</span>  <span class="c1"># Asus MB168B (15.6&quot;, 1366x768)</span>
+                <span class="n">common_pai</span> <span class="o">=</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_PAI_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;replay&#39;</span><span class="p">][</span><span class="s1">&#39;medium_quality&#39;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">common_pai</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">__get_scenario</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">medium</span><span class="p">,</span> <span class="n">session</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">medium</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">session</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span>
+                    <span class="n">scenario</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">scenario</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">session</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span>
+                    <span class="n">scenario</span> <span class="o">=</span> <span class="mi">2</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">scenario</span> <span class="o">=</span> <span class="mi">3</span>
+
+        <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;2&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">medium</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">session</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span>
+                    <span class="n">scenario</span> <span class="o">=</span> <span class="mi">4</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">scenario</span> <span class="o">=</span> <span class="mi">5</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">session</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span>
+                    <span class="n">scenario</span> <span class="o">=</span> <span class="mi">6</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">scenario</span> <span class="o">=</span> <span class="mi">7</span>
+
+        <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;3&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">medium</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span>
+                <span class="n">scenario</span> <span class="o">=</span> <span class="mi">8</span>
+
+            <span class="k">elif</span> <span class="n">medium</span> <span class="o">==</span> <span class="s1">&#39;2&#39;</span><span class="p">:</span>
+                <span class="n">scenario</span> <span class="o">=</span> <span class="mi">9</span>
+
+            <span class="k">elif</span> <span class="n">medium</span> <span class="o">==</span> <span class="s1">&#39;3&#39;</span><span class="p">:</span>
+                <span class="n">scenario</span> <span class="o">=</span> <span class="mi">10</span>
+
+            <span class="k">elif</span> <span class="n">medium</span> <span class="o">==</span> <span class="s1">&#39;4&#39;</span><span class="p">:</span>
+                <span class="n">scenario</span> <span class="o">=</span> <span class="mi">11</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">scenario</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">scenario</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">scenario</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">__get_common_lightning</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">medium</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span>    <span class="c1"># real</span>
+            <span class="k">if</span> <span class="n">medium</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span>
+                <span class="n">common_lightning</span> <span class="o">=</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_LIGHTNING_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;controlled&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">common_lightning</span> <span class="o">=</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_LIGHTNING_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;adverse&#39;</span><span class="p">]</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">common_lightning</span> <span class="o">=</span> <span class="n">inter_db_cat</span><span class="o">.</span><span class="n">COMMON_LIGHTNING_CATEGORISATION</span><span class="p">[</span><span class="s1">&#39;no_info&#39;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">common_lightning</span>
+
+<div class="viewcode-block" id="SiwDatabase.get_ground_truth"><a class="viewcode-back" href="../../../../../../../py_api.html#bob.gradiant.face.databases.SiwDatabase.get_ground_truth">[docs]</a>    <span class="k">def</span> <span class="nf">get_ground_truth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">protocol</span><span class="p">):</span>
+        <span class="n">gt_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="n">protocol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">SIW_PROTOCOLS</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Protocol [</span><span class="si">{}</span><span class="s1">] not available in SIW protocols [</span><span class="si">{}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">protocol</span><span class="p">,</span> <span class="n">SIW_PROTOCOLS</span><span class="p">))</span>
+
+        <span class="n">dict_all_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_all_labels</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">subset</span> <span class="ow">in</span> <span class="n">dict_all_labels</span><span class="p">:</span>
+            <span class="n">gt_dict</span><span class="p">[</span><span class="n">subset</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">basename</span> <span class="ow">in</span> <span class="n">dict_all_labels</span><span class="p">[</span><span class="n">subset</span><span class="p">]:</span>
+                <span class="n">gt_dict</span><span class="p">[</span><span class="n">subset</span><span class="p">][</span><span class="n">basename</span><span class="p">]</span> <span class="o">=</span> <span class="n">dict_all_labels</span><span class="p">[</span><span class="n">subset</span><span class="p">][</span><span class="n">basename</span><span class="p">][</span><span class="s1">&#39;pai&#39;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">gt_dict</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Gradiant
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../../" src="../../../../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../../../../_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../../../../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
