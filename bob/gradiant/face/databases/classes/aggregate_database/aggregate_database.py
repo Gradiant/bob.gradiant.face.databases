@@ -254,3 +254,33 @@ class AggregateDatabase(Database):
                 gt_dict[subset][basename] = filtered_labels[subset][basename]["common_pai"]
 
         return gt_dict
+
+    def get_ground_truth_list(self, protocol_key):
+        if protocol_key not in list(self.protocols):
+            raise ValueError('Protocol [{}] not available in AggregateDatabase protocols [{}]'
+                             .format(protocol_key, list(self.protocols)))
+        gt_dict_list = {}
+        dict_all_labels = self.get_all_labels()
+
+        protocol = self.protocols[protocol_key]
+        filtered_labels = filter_labels_by_protocol(protocol, dict_all_labels)
+
+        def find_database_name_placeholder(d, key):
+            for subset in ['Train', 'Dev', 'Test']:
+                for database_name, items in d[subset].items():
+                    if key in items.keys():
+                        return '{' + database_name.upper() + '-PLACEHOLDER}'
+
+        for subset in filtered_labels:
+            gt_dict_list[subset] = {}
+            for basename in filtered_labels[subset]:
+                database_placeholder = find_database_name_placeholder(dict_all_labels, basename)
+
+                if database_placeholder == '{CASIA-SURF-PLACEHOLDER}':
+                    continue
+
+                complete_path_access = '{}/{}'.format(database_placeholder, basename)
+                gt_dict_list[subset][complete_path_access] = filtered_labels[subset][basename][
+                    "common_pai"]
+
+        return gt_dict_list
